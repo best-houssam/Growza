@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growza – ارفع تفاعلك للقمة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#01030a;
+  --v:#7c3aed;--vl:#a855f7;--pk:#ec4899;
+  --cy:#06b6d4;--gd:#f59e0b;--gr:#10b981;
+  --tx:#eef2ff;--mt:#5a6a90;
+  --card:rgba(120,50,240,0.07);
+  --border:rgba(120,50,240,0.22);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--tx);font-family:'Cairo',sans-serif;overflow-x:hidden;}
+
+/* ===== SPACE BG ===== */
+#space-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* Nebula layers */
+.nebula{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;animation:nebPulse 8s ease-in-out infinite;}
+.neb1{width:900px;height:600px;top:-200px;right:-200px;background:radial-gradient(ellipse,rgba(124,58,237,0.18) 0%,transparent 70%);animation-delay:0s;}
+.neb2{width:700px;height:500px;bottom:-150px;left:-150px;background:radial-gradient(ellipse,rgba(236,72,153,0.14) 0%,transparent 70%);animation-delay:3s;}
+.neb3{width:500px;height:400px;top:40%;left:40%;background:radial-gradient(ellipse,rgba(6,182,212,0.08) 0%,transparent 70%);animation-delay:5s;}
+@keyframes nebPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+
+/* Grid */
+.grid-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(120,50,240,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(120,50,240,0.04) 1px,transparent 1px);
+  background-size:80px 80px;
+}
+.grid-bg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(124,58,237,0.05) 0%,transparent 70%);
+}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  padding:16px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(1,3,10,0.75);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(120,50,240,0.12);
+}
+.logo{
+  font-family:'Syncopate',sans-serif;font-size:1.6rem;font-weight:700;
+  background:linear-gradient(120deg,#a855f7,#ec4899,#06b6d4,#a855f7);
+  background-size:300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:logoShift 4s linear infinite;letter-spacing:4px;
+}
+@keyframes logoShift{0%{background-position:0%;}100%{background-position:300%;}}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--mt);text-decoration:none;font-size:.88rem;font-weight:600;letter-spacing:1px;transition:color .3s;}
+.nav-links a:hover{color:var(--vl);}
+.nav-cta{
+  background:linear-gradient(135deg,var(--v),var(--pk));
+  border:none;color:#fff;padding:10px 28px;
+  font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:700;
+  border-radius:10px;cursor:pointer;transition:all .3s;
+  box-shadow:0 4px 20px rgba(124,58,237,.35);
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,.6);}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.ham span{width:24px;height:2px;background:var(--vl);border-radius:2px;transition:.3s;}
+
+/* ===== HERO ===== */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:130px 5% 80px;overflow:hidden;
+}
+
+.ring{
+  position:absolute;border-radius:50%;border:1px solid;
+  animation:spin linear infinite;pointer-events:none;
+}
+.ring1{width:700px;height:700px;border-color:rgba(168,85,247,.06);animation-duration:30s;top:50%;left:50%;transform:translate(-50%,-50%);}
+.ring2{width:900px;height:900px;border-color:rgba(236,72,153,.04);animation-duration:50s;animation-direction:reverse;top:50%;left:50%;transform:translate(-50%,-50%);}
+.ring3{width:500px;height:500px;border-color:rgba(6,182,212,.07);animation-duration:20s;top:50%;left:50%;transform:translate(-50%,-50%);}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+.planet{
+  position:absolute;width:380px;height:380px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,rgba(168,85,247,.3),rgba(124,58,237,.15),transparent 70%);
+  border:1px solid rgba(168,85,247,.1);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  box-shadow:0 0 100px rgba(124,58,237,.15),inset 0 0 60px rgba(168,85,247,.08);
+  pointer-events:none;
+  animation:planetPulse 6s ease-in-out infinite;
+}
+@keyframes planetPulse{0%,100%{box-shadow:0 0 100px rgba(124,58,237,.15),inset 0 0 60px rgba(168,85,247,.08);}50%{box-shadow:0 0 150px rgba(124,58,237,.25),inset 0 0 80px rgba(168,85,247,.15);}}
+
+.hero-content{position:relative;z-index:2;width:100%;}
+
+.live-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);
+  border-radius:100px;padding:7px 18px;
+  font-size:.72rem;font-weight:700;letter-spacing:3px;
+  color:var(--gr);text-transform:uppercase;margin-bottom:28px;
+  animation:fadeUp .7s ease both;
+}
+.live-dot{width:7px;height:7px;background:var(--gr);border-radius:50%;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{opacity:.6;box-shadow:0 0 0 7px rgba(16,185,129,0);}}
+
+.hero-title{
+  font-family:'Syncopate',sans-serif;
+  font-size:clamp(3rem,10vw,8rem);
+  font-weight:700;line-height:.9;margin-bottom:20px;
+  animation:fadeUp .7s ease .1s both;
+}
+.ht-solid{
+  display:block;
+  background:linear-gradient(135deg,#fff 0%,rgba(168,85,247,.8) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.ht-outline{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:1.5px rgba(168,85,247,.5);
+  text-shadow:none;
+}
+
+.hero-sub{
+  font-size:clamp(.9rem,2vw,1.15rem);
+  color:var(--mt);letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:20px;
+  animation:fadeUp .7s ease .2s both;
+}
+.hero-sub span{color:var(--pk);}
+
+.hero-desc{
+  max-width:560px;margin:0 auto 44px;
+  font-size:1.02rem;line-height:1.95;
+  color:rgba(180,195,230,.8);
+  animation:fadeUp .7s ease .3s both;
+}
+
+.hero-btns{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:60px;
+  animation:fadeUp .7s ease .4s both;
+}
+.btn-glow{
+  background:linear-gradient(135deg,var(--v),var(--pk));
+  border:none;color:#fff;padding:15px 42px;
+  font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;
+  border-radius:12px;cursor:pointer;transition:all .3s;
+  box-shadow:0 6px 25px rgba(124,58,237,.4);
+  position:relative;overflow:hidden;
+}
+.btn-glow::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);
+  transform:translateX(-150%);transition:.6s;
+}
+.btn-glow:hover::after{transform:translateX(150%);}
+.btn-glow:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(124,58,237,.65);}
+.btn-border{
+  background:transparent;
+  border:1px solid rgba(168,85,247,.35);
+  color:var(--vl);padding:15px 42px;
+  font-family:'Cairo',sans-serif;font-size:1rem;font-weight:600;
+  border-radius:12px;cursor:pointer;transition:all .3s;
+}
+.btn-border:hover{background:rgba(168,85,247,.1);border-color:var(--vl);}
+
+.orbit-platforms{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;
+  animation:fadeUp .7s ease .5s both;
+}
+.orb-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:9px 18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:10px;
+  font-size:.83rem;font-weight:600;color:var(--mt);
+  transition:all .4s;cursor:default;
+}
+.orb-badge:hover{border-color:rgba(168,85,247,.4);color:var(--tx);transform:translateY(-3px);}
+.orb-badge svg{width:18px;height:18px;flex-shrink:0;}
+
+.hud{
+  position:absolute;
+  background:rgba(1,3,10,.7);
+  border:1px solid rgba(168,85,247,.2);
+  border-radius:12px;padding:12px 16px;
+  backdrop-filter:blur(14px);
+  display:flex;align-items:center;gap:10px;
+  font-size:.8rem;font-weight:700;
+  pointer-events:none;
+  animation:hudFloat linear infinite;
+}
+.hud-dot{width:8px;height:8px;border-radius:50%;animation:blink 2s infinite;}
+.hud1{top:22%;left:2%;animation-duration:7s;animation-delay:0s;}
+.hud2{top:28%;right:2%;animation-duration:9s;animation-delay:2s;}
+.hud3{bottom:22%;left:4%;animation-duration:8s;animation-delay:4s;}
+.hud4{bottom:25%;right:4%;animation-duration:6s;animation-delay:1s;}
+@keyframes hudFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+/* ===== STATS ===== */
+.stats{
+  position:relative;z-index:1;
+  background:rgba(120,50,240,.07);
+  border-top:1px solid rgba(120,50,240,.15);
+  border-bottom:1px solid rgba(120,50,240,.15);
+  padding:44px 5%;
+}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;}
+.stat-n{
+  font-family:'Syncopate',sans-serif;font-size:2.4rem;font-weight:700;
+  background:linear-gradient(135deg,var(--vl),var(--pk));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;margin-bottom:6px;
+}
+.stat-l{font-size:.75rem;color:var(--mt);letter-spacing:2.5px;text-transform:uppercase;}
+
+/* ===== SECTION BASE ===== */
+.sec{position:relative;z-index:1;padding:100px 5%;max-width:1340px;margin:0 auto;}
+.sec-lbl{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.68rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--vl);font-weight:700;margin-bottom:14px;
+}
+.sec-lbl::before{content:'//';opacity:.5;}
+.sec-h{
+  font-family:'Syncopate',sans-serif;
+  font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:16px;
+}
+.sec-p{color:var(--mt);font-size:.98rem;line-height:1.85;max-width:540px;}
+.grad-text{
+  background:linear-gradient(135deg,var(--vl),var(--pk));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.reveal{opacity:0;transform:translateY(28px);transition:all .7s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+/* ===== SERVICES ===== */
+.srv-head{text-align:center;margin-bottom:60px;}
+.srv-head .sec-p{margin:0 auto;}
+.cats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:46px;}
+.cat{
+  background:transparent;border:1px solid var(--border);
+  color:var(--mt);padding:9px 22px;
+  font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;
+  border-radius:9px;cursor:pointer;transition:all .3s;
+  display:flex;align-items:center;gap:7px;
+}
+.cat svg{width:16px;height:16px;}
+.cat.on,.cat:hover{
+  background:linear-gradient(135deg,var(--v),var(--pk));
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 18px rgba(124,58,237,.35);
+}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+
+.sc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  position:relative;overflow:hidden;cursor:pointer;transition:all .4s;
+}
+.sc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--v),var(--pk),var(--cy));
+  transform:scaleX(0);transform-origin:right;transition:.4s;
+}
+.sc:hover::before{transform:scaleX(1);transform-origin:left;}
+.sc:hover{
+  border-color:rgba(168,85,247,.45);
+  background:rgba(120,50,240,.12);
+  transform:translateY(-6px);
+  box-shadow:0 22px 55px rgba(0,0,0,.6),0 0 30px rgba(124,58,237,.2);
+}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.sc-logo{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+}
+.sc-logo svg,.sc-logo img{width:100%;height:100%;}
+.badge-hot{
+  background:linear-gradient(135deg,var(--pk),#f97316);
+  color:#fff;font-size:.62rem;font-weight:700;
+  letter-spacing:1px;padding:4px 10px;border-radius:20px;text-transform:uppercase;
+}
+.badge-new{
+  background:linear-gradient(135deg,var(--gr),var(--cy));
+  color:#fff;font-size:.62rem;font-weight:700;
+  letter-spacing:1px;padding:4px 10px;border-radius:20px;text-transform:uppercase;
+}
+.badge-web{
+  background:linear-gradient(135deg,#0891b2,#6d28d9);
+  color:#fff;font-size:.62rem;font-weight:700;
+  letter-spacing:1px;padding:4px 10px;border-radius:20px;text-transform:uppercase;
+}
+.sc-name{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:7px;}
+.sc-desc{font-size:.86rem;color:var(--mt);line-height:1.72;margin-bottom:20px;}
+.sc-footer{display:flex;align-items:center;justify-content:flex-end;}
+.sc-btn{
+  background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.28);
+  color:var(--vl);padding:8px 20px;border-radius:9px;
+  font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;
+  cursor:pointer;transition:all .3s;
+}
+.sc-btn:hover{background:linear-gradient(135deg,var(--v),var(--pk));border-color:transparent;color:#fff;}
+
+/* Web Dev card special glow */
+.sc[data-cat="web"]{
+  background:linear-gradient(135deg,rgba(8,145,178,.07),rgba(109,40,217,.06));
+  border-color:rgba(8,145,178,.25);
+}
+.sc[data-cat="web"]:hover{
+  border-color:rgba(8,145,178,.55);
+  background:linear-gradient(135deg,rgba(8,145,178,.13),rgba(109,40,217,.1));
+  box-shadow:0 22px 55px rgba(0,0,0,.6),0 0 35px rgba(8,145,178,.2);
+}
+.sc[data-cat="web"]::before{
+  background:linear-gradient(90deg,#0891b2,#6d28d9,#06b6d4);
+}
+.web-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.web-tag{
+  background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);
+  color:var(--cy);font-size:.67rem;font-weight:700;
+  padding:3px 9px;border-radius:5px;letter-spacing:.5px;
+}
+
+/* ===== CRYPTO ===== */
+.crypto-wrap{
+  position:relative;z-index:1;padding:0 5% 100px;
+}
+.crypto-box{
+  max-width:1300px;margin:0 auto;
+  background:linear-gradient(135deg,rgba(124,58,237,.09),rgba(236,72,153,.06),rgba(6,182,212,.04));
+  border:1px solid rgba(124,58,237,.2);
+  border-radius:24px;padding:60px;
+  position:relative;overflow:hidden;
+}
+.crypto-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,158,11,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.crypto-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+
+.coin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.coin{
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;padding:18px 16px;
+  display:flex;align-items:center;gap:13px;
+  transition:all .3s;cursor:default;
+}
+.coin:hover{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.05);transform:translateY(-3px);}
+.coin-ico{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:0;
+}
+.coin-ico svg{width:100%;height:100%;}
+.coin-nm{font-size:.82rem;font-weight:700;color:#fff;display:block;}
+.coin-sym{font-size:.7rem;color:var(--mt);}
+
+/* ===== PAYMENT ===== */
+.pay-sec{
+  position:relative;z-index:1;
+  background:rgba(6,182,212,.03);
+  border-top:1px solid rgba(6,182,212,.1);
+  border-bottom:1px solid rgba(6,182,212,.1);
+  padding:80px 5%;
+}
+.pay-inner{max-width:1100px;margin:0 auto;}
+.pay-head{text-align:center;margin-bottom:50px;}
+.pay-head .sec-p{margin:0 auto;text-align:center;}
+.pay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+.pay-card{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:13px;padding:22px 14px;
+  text-align:center;transition:all .3s;
+}
+.pay-card:hover{border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.06);transform:translateY(-4px);}
+.pay-ico{
+  width:52px;height:52px;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:12px;
+}
+.pay-ico svg{width:100%;height:100%;}
+.pay-nm{font-size:.82rem;font-weight:700;color:var(--tx);display:block;margin-bottom:3px;}
+.pay-sub{font-size:.68rem;color:var(--mt);}
+
+/* ===== HOW ===== */
+.how-wrap{position:relative;z-index:1;padding:100px 5%;}
+.how-inner{max-width:1000px;margin:0 auto;}
+.how-head{text-align:center;margin-bottom:70px;}
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;}
+.steps-row::before{
+  content:'';position:absolute;
+  top:38px;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--vl),var(--pk),var(--cy),transparent);
+  opacity:.25;
+}
+.step{text-align:center;}
+.step-n{
+  width:76px;height:76px;margin:0 auto 20px;
+  background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(236,72,153,.15));
+  border:1px solid rgba(168,85,247,.35);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Syncopate',sans-serif;font-size:1.3rem;font-weight:700;color:var(--vl);
+  position:relative;z-index:1;transition:all .3s;
+}
+.step:hover .step-n{background:linear-gradient(135deg,var(--v),var(--pk));color:#fff;box-shadow:0 0 30px rgba(124,58,237,.5);}
+.step-t{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px;}
+.step-d{font-size:.83rem;color:var(--mt);line-height:1.7;}
+
+/* ===== TESTIMONIALS ===== */
+.testi-wrap{position:relative;z-index:1;padding:0 5% 100px;}
+.testi-head{max-width:1200px;margin:0 auto 54px;text-align:center;}
+.testi-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.tc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:28px;transition:all .3s;
+}
+.tc:hover{border-color:rgba(168,85,247,.4);transform:translateY(-4px);}
+.stars{color:var(--gd);font-size:.88rem;letter-spacing:2px;margin-bottom:14px;}
+.tc-txt{font-size:.88rem;color:rgba(200,215,240,.85);line-height:1.85;margin-bottom:20px;}
+.tc-auth{display:flex;align-items:center;gap:12px;}
+.av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#fff;flex-shrink:0;}
+.av-nm{font-size:.87rem;font-weight:700;color:#fff;display:block;}
+.av-h{font-size:.73rem;color:var(--vl);}
+
+/* ===== CTA ===== */
+.cta-wrap{position:relative;z-index:1;padding:0 5% 100px;}
+.cta-box{
+  max-width:900px;margin:0 auto;text-align:center;
+  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(236,72,153,.1));
+  border:1px solid rgba(124,58,237,.25);
+  border-radius:24px;padding:80px 40px;
+  position:relative;overflow:hidden;
+}
+.cta-box::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(124,58,237,.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-h{font-family:'Syncopate',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;margin-bottom:16px;position:relative;z-index:1;}
+.cta-p{color:var(--mt);font-size:1rem;line-height:1.85;margin-bottom:40px;position:relative;z-index:1;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+
+/* ===== FOOTER ===== */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(120,50,240,.15);
+  padding:60px 5% 30px;
+}
+.ft{max-width:1200px;margin:0 auto;}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.ft-logo{font-family:'Syncopate',sans-serif;font-size:1.3rem;font-weight:700;
+  background:linear-gradient(120deg,#a855f7,#ec4899,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:4px;display:block;margin-bottom:14px;}
+.ft-desc{font-size:.86rem;color:var(--mt);line-height:1.8;max-width:270px;}
+.ft-soc{display:flex;gap:10px;margin-top:18px;}
+.ft-soc a{
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(120,50,240,.14);border:1px solid rgba(120,50,240,.25);
+  display:flex;align-items:center;justify-content:center;transition:all .3s;
+}
+.ft-soc a:hover{background:linear-gradient(135deg,var(--v),var(--pk));border-color:transparent;}
+.ft-soc a svg{width:16px;height:16px;}
+.ft-col-t{font-size:.75rem;font-weight:700;letter-spacing:2px;color:var(--vl);text-transform:uppercase;margin-bottom:18px;}
+.ft-ul{list-style:none;}
+.ft-ul li{margin-bottom:10px;}
+.ft-ul a{color:var(--mt);text-decoration:none;font-size:.86rem;transition:color .2s;}
+.ft-ul a:hover{color:var(--tx);}
+.ft-bot{
+  padding-top:28px;border-top:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+}
+.ft-copy{font-size:.77rem;color:var(--mt);}
+.ft-badges{display:flex;gap:10px;}
+.fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:var(--gr);padding:4px 12px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:1px;}
+
+/* ===== MODAL ===== */
+.ovl{
+  position:fixed;inset:0;background:rgba(0,0,0,.88);
+  backdrop-filter:blur(14px);z-index:500;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.ovl.show{opacity:1;pointer-events:all;}
+.modal{
+  background:#060c18;border:1px solid rgba(124,58,237,.3);
+  border-radius:20px;max-width:540px;width:100%;
+  max-height:90vh;overflow-y:auto;padding:42px;
+  position:relative;
+  transform:scale(.95) translateY(20px);transition:all .3s;
+}
+.ovl.show .modal{transform:scale(1) translateY(0);}
+.m-close{
+  position:absolute;top:16px;left:16px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  color:var(--mt);width:36px;height:36px;border-radius:50%;
+  font-size:1rem;cursor:pointer;transition:.2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.m-close:hover{background:rgba(236,72,153,.2);color:var(--pk);}
+.m-title{font-family:'Syncopate',sans-serif;font-size:1.4rem;font-weight:700;color:var(--vl);margin-bottom:6px;}
+.m-sub{font-size:.86rem;color:var(--mt);margin-bottom:28px;}
+.fg{margin-bottom:16px;}
+.fl{display:block;font-size:.8rem;font-weight:700;color:var(--tx);margin-bottom:7px;letter-spacing:.5px;}
+.fi,.fsel{
+  width:100%;background:rgba(255,255,255,.04);
+  border:1px solid rgba(124,58,237,.25);border-radius:10px;
+  padding:12px 16px;color:var(--tx);
+  font-family:'Cairo',sans-serif;font-size:.9rem;transition:.3s;outline:none;
+}
+.fi:focus,.fsel:focus{border-color:var(--vl);}
+.fsel option{background:#060c18;}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.sub-btn{
+  width:100%;background:linear-gradient(135deg,var(--v),var(--pk));
+  border:none;color:#fff;padding:14px;border-radius:10px;
+  font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;transition:all .3s;margin-top:10px;
+  box-shadow:0 6px 25px rgba(124,58,237,.4);
+}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(124,58,237,.6);}
+
+/* WhatsApp */
+.wa{
+  position:fixed;bottom:28px;left:28px;z-index:400;
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#128c7e);
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;transition:.3s;
+  box-shadow:0 6px 25px rgba(37,211,102,.5);
+  animation:wap 3s ease-in-out infinite;
+}
+.wa:hover{transform:scale(1.1);}
+.wa svg{width:28px;height:28px;fill:#fff;}
+@keyframes wap{0%,100%{box-shadow:0 6px 25px rgba(37,211,102,.5);}50%{box-shadow:0 6px 40px rgba(37,211,102,.8),0 0 0 10px rgba(37,211,102,.1);}}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(168,85,247,.35);border-radius:2px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1024px){
+  .ft-top{grid-template-columns:1fr 1fr;}
+  .steps-row{grid-template-columns:repeat(2,1fr);}
+  .steps-row::before{display:none;}
+  .crypto-inner{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .ham{display:flex;}
+  .nav-links.open{
+    display:flex;flex-direction:column;gap:0;
+    position:fixed;top:68px;left:0;right:0;
+    background:rgba(1,3,10,.97);
+    border-bottom:1px solid rgba(120,50,240,.2);
+    padding:20px;z-index:299;
+  }
+  .nav-links.open a{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);display:block;}
+  .hud{display:none;}
+  .ring{display:none;}
+  .planet{width:260px;height:260px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .srv-grid{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .ft-top{grid-template-columns:1fr;}
+  .ft-bot{flex-direction:column;text-align:center;}
+  .cta-box{padding:50px 24px;}
+  .modal{padding:32px 20px;}
+  .f2{grid-template-columns:1fr;}
+  .crypto-box{padding:32px 20px;}
+}
+@media(max-width:480px){
+  .steps-row{grid-template-columns:1fr;}
+  .coin-grid{grid-template-columns:1fr 1fr;}
+  .pay-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- Space Canvas -->
+<canvas id="space-canvas"></canvas>
+<div class="grid-bg"></div>
+<div class="nebula neb1"></div>
+<div class="nebula neb2"></div>
+<div class="nebula neb3"></div>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/213000000000" class="wa" title="واتساب">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">GROWZA</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#crypto">العملات</a></li>
+    <li><a href="#payment">الدفع</a></li>
+    <li><a href="#how">كيف نعمل</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openOrder()">🚀 اطلب الآن</button>
+  <div class="ham" id="ham" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="ring ring1"></div>
+  <div class="ring ring2"></div>
+  <div class="ring ring3"></div>
+  <div class="planet"></div>
+
+  <div class="hud hud1">
+    <div class="hud-dot" style="background:#10b981"></div>
+    <span style="color:#10b981">+1,240</span>
+    <span style="color:#6b7ea0">متابع جديد</span>
+  </div>
+  <div class="hud hud2">
+    <div class="hud-dot" style="background:#ec4899"></div>
+    <span style="color:#ec4899">+8,500</span>
+    <span style="color:#6b7ea0">لايك</span>
+  </div>
+  <div class="hud hud3">
+    <div class="hud-dot" style="background:#06b6d4"></div>
+    <span style="color:#06b6d4">+50K</span>
+    <span style="color:#6b7ea0">مشاهدة</span>
+  </div>
+  <div class="hud hud4">
+    <div class="hud-dot" style="background:#f59e0b"></div>
+    <span style="color:#f59e0b">⚡ تسليم فوري</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="live-badge"><div class="live-dot"></div>المتجر الأول في الجزائر للتفاعل الرقمي</div>
+    <h1 class="hero-title">
+      <span class="ht-solid">GROW</span>
+      <span class="ht-outline">ZA</span>
+    </h1>
+    <p class="hero-sub">ارفع تفاعلك • <span>وسّع حضورك</span> • انتشر</p>
+    <p class="hero-desc">متجرك الأول لشراء اللايكات، المتابعين، المشاهدات وتداول العملات الرقمية. خدمة فورية آمنة بطرق دفع جزائرية.</p>
+    <div class="hero-btns">
+      <button class="btn-glow" onclick="openOrder()">🛒 اطلب الآن</button>
+      <button class="btn-border" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">اكتشف الخدمات</button>
+    </div>
+    <div class="orbit-platforms">
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24" fill="none"><defs><radialGradient id="ig1" cx="30%" cy="107%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig1)"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+        Instagram
+      </div>
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#000"/><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/><path d="M19.5 7.7a5.7 5.7 0 01-3.6-1.2v6.88a4.9 4.9 0 11-4.3-4.85V11a2.5 2.5 0 102.3 2.48V3.5h2.55a5.72 5.72 0 003.05 4.2z" fill="#69C9D0" opacity="0.7"/></svg>
+        TikTok
+      </div>
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FF0000"/><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5.3 12 5.3 12 5.3s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#FF0000"/><path d="M10 15V9l5.5 3L10 15z" fill="#fff"/></svg>
+        YouTube
+      </div>
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#1877F2"/><path d="M16 8h-2c-.6 0-1 .4-1 1v1.5h3l-.5 3H13V20h-3v-6.5H8v-3h2V9c0-2.2 1.3-3.5 3.3-3.5.9 0 1.7.1 2.7.2V8z" fill="#fff"/></svg>
+        Facebook
+      </div>
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#2AABEE"/><path d="M5.5 11.5l12-5-4 11-3-4-5-2zm0 0l5 2m7-9l-7 6" stroke="#fff" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg>
+        Telegram
+      </div>
+      <div class="orb-badge">
+        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5zm-.9 14h1.4L8.1 6H6.6l10 12.5z" fill="#fff"/></svg>
+        Twitter/X
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="reveal"><span class="stat-n" data-t="15000">0</span><span class="stat-l">عميل راضٍ</span></div>
+    <div class="reveal"><span class="stat-n" data-t="500">0</span><span class="stat-l">مليون تفاعل</span></div>
+    <div class="reveal"><span class="stat-n" data-t="99">0</span><span class="stat-l">% نسبة الرضا</span></div>
+    <div class="reveal"><span class="stat-n" data-t="24">0</span><span class="stat-l">ساعة دعم</span></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+<div class="sec">
+  <div class="srv-head reveal">
+    <span class="sec-lbl">خدماتنا</span>
+    <h2 class="sec-h">كل ما تحتاجه<br><span class="grad-text">تحت سقف واحد</span></h2>
+    <p class="sec-p">اختر من بين مجموعة واسعة من خدمات تعزيز التفاعل الرقمي على جميع المنصات.</p>
+  </div>
+
+  <div class="cats">
+    <button class="cat on" onclick="filt('all',this)">⚡ الكل</button>
+    <button class="cat" onclick="filt('ig',this)">
+      <svg viewBox="0 0 24 24"><defs><radialGradient id="ig2" cx="30%" cy="107%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig2)"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
+      Instagram
+    </button>
+    <button class="cat" onclick="filt('tt',this)">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg>
+      TikTok
+    </button>
+    <button class="cat" onclick="filt('yt',this)">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FF0000"/><path d="M10 15V9l5.5 3L10 15z" fill="#fff"/></svg>
+      YouTube
+    </button>
+    <button class="cat" onclick="filt('web',this)">🌐 مواقع</button>
+    <button class="cat" onclick="filt('other',this)">📱 أخرى</button>
+  </div>
+
+  <div class="srv-grid reveal" id="srvGrid">
+
+    <!-- IG Likes -->
+    <div class="sc" data-cat="ig">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="#fff" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <span class="badge-hot">🔥 الأكثر طلباً</span>
+      </div>
+      <div class="sc-name">لايكات Instagram</div>
+      <div class="sc-desc">لايكات حقيقية وآمنة لمنشوراتك. تسليم فوري خلال دقائق. لا خطر على حسابك.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('لايكات Instagram')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- IG Followers -->
+    <div class="sc" data-cat="ig">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1m7-1a3 3 0 110 6 3 3 0 010-6z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M20 14v6m-3-3h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <span class="badge-hot">⚡ تسليم سريع</span>
+      </div>
+      <div class="sc-name">متابعين Instagram</div>
+      <div class="sc-desc">متابعين يرفعون مصداقية حسابك ويزيدون ظهورك في خوارزمية إنستغرام.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متابعين Instagram')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- IG Reels -->
+    <div class="sc" data-cat="ig">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M10 9l5 3-5 3V9z" fill="#fff"/></svg>
+        </div>
+        <span class="badge-new">✨ جديد</span>
+      </div>
+      <div class="sc-name">مشاهدات Reels & Stories</div>
+      <div class="sc-desc">عزز مشاهدات ريلزك وستوريز إنستغرام وارفع فرص الظهور في صفحة الاستكشاف.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات Instagram Reels')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- TikTok Views -->
+    <div class="sc" data-cat="tt">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/><path d="M18.5 7.7a5.7 5.7 0 01-3.1-1.2" stroke="#69C9D0" stroke-width="1.2"/></svg>
+        </div>
+        <span class="badge-hot">🔥 ترند</span>
+      </div>
+      <div class="sc-name">مشاهدات TikTok</div>
+      <div class="sc-desc">ارفع مشاهدات فيديوهاتك واصل لصفحة "For You" وحقق الانتشار الواسع.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات TikTok')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- TikTok Followers -->
+    <div class="sc" data-cat="tt">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M17 13v6m-3-3h6" stroke="#69C9D0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="sc-name">متابعين TikTok</div>
+      <div class="sc-desc">متابعين حقيقيين يساعدونك على الوصول لـ Creator Fund وزيادة تأثيرك.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متابعين TikTok')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- YouTube Views -->
+    <div class="sc" data-cat="yt">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#FF0000">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/><path d="M10 15V9l5.5 3L10 15z" fill="#FF0000"/></svg>
+        </div>
+      </div>
+      <div class="sc-name">مشاهدات YouTube</div>
+      <div class="sc-desc">مشاهدات تساعد قناتك على التوصيات والبحث. حقق الـ 4000 ساعة بسرعة.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات YouTube')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- YT Subscribers -->
+    <div class="sc" data-cat="yt">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#FF0000">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/><path d="M17 14v5m-2.5-2.5h5" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <span class="badge-new">✨ متاح</span>
+      </div>
+      <div class="sc-name">مشتركين YouTube</div>
+      <div class="sc-desc">زد مشتركينك وحقق حد الـ 1000 مشترك لتفعيل تحقيق الدخل على قناتك.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشتركين YouTube')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- ===== WEB DEVELOPMENT ===== -->
+    <div class="sc" data-cat="web">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:linear-gradient(135deg,#0891b2,#6d28d9)">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="3" width="20" height="14" rx="3" stroke="#fff" stroke-width="1.8" fill="none"/>
+            <path d="M8 21h8m-4-4v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M7 10l2.5 2.5L7 15" stroke="#06b6d4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13 14h4" stroke="#a855f7" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="badge-web">💻 خدمة جديدة</span>
+      </div>
+      <div class="sc-name">تطوير المواقع الإلكترونية</div>
+      <div class="sc-desc">نصمم ونطور مواقع احترافية متجاوبة وسريعة تعكس هويتك وتجذب عملاءك. من المتاجر الإلكترونية إلى مواقع الشركات.</div>
+      <div class="web-tags">
+        <span class="web-tag">HTML / CSS</span>
+        <span class="web-tag">React</span>
+        <span class="web-tag">WordPress</span>
+        <span class="web-tag">متجر إلكتروني</span>
+        <span class="web-tag">Landing Page</span>
+      </div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('تطوير موقع إلكتروني')" style="background:rgba(8,145,178,.15);border-color:rgba(8,145,178,.35);color:var(--cy)">اطلب موقعك ←</button></div>
+    </div>
+
+    <!-- تصميم موقع متجر -->
+    <div class="sc" data-cat="web">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:linear-gradient(135deg,#6d28d9,#0891b2)">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="9" cy="21" r="1.2" fill="#06b6d4"/>
+            <circle cx="19" cy="21" r="1.2" fill="#06b6d4"/>
+          </svg>
+        </div>
+        <span class="badge-hot">🔥 الأكثر طلباً</span>
+      </div>
+      <div class="sc-name">متجر إلكتروني احترافي</div>
+      <div class="sc-desc">موقع بيع أونلاين كامل مع لوحة تحكم، سلة تسوق، وطرق دفع جزائرية مدمجة. ابدأ البيع فوراً.</div>
+      <div class="web-tags">
+        <span class="web-tag">Baridimob</span>
+        <span class="web-tag">CIB Online</span>
+        <span class="web-tag">لوحة تحكم</span>
+        <span class="web-tag">SEO مُحسَّن</span>
+      </div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متجر إلكتروني')" style="background:rgba(8,145,178,.15);border-color:rgba(8,145,178,.35);color:var(--cy)">اطلب متجرك ←</button></div>
+    </div>
+
+    <!-- Facebook -->
+    <div class="sc" data-cat="other">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#1877F2">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16 8h-2c-.6 0-1 .4-1 1v1.5h3l-.5 3H13V20h-3v-6.5H8v-3h2V9c0-2.2 1.3-3.5 3.3-3.5.9 0 1.7.1 2.7.2V8z" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="sc-name">لايكات & متابعين Facebook</div>
+      <div class="sc-desc">عزز صفحتك على فيسبوك بلايكات ومتابعين حقيقيين لزيادة مصداقيتك.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Facebook')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- Telegram -->
+    <div class="sc" data-cat="other">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#2AABEE">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l14-7-5 14-3-4-6-3z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M10 12l4-2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="sc-name">أعضاء Telegram</div>
+      <div class="sc-desc">زد أعضاء قناتك أو مجموعتك على تيليغرام وابن مجتمعاً نشطاً وحقيقياً.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Telegram')">اطلب الآن ←</button></div>
+    </div>
+
+    <!-- Twitter/X -->
+    <div class="sc" data-cat="other">
+      <div class="sc-top">
+        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.15)">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5zm-.9 14h1.4L8.1 6H6.6l10 12.5z" fill="#fff"/></svg>
+        </div>
+      </div>
+      <div class="sc-name">متابعين Twitter / X</div>
+      <div class="sc-desc">متابعين يزيدون تأثيرك ومصداقيتك ويساعدونك على الوصول للـ Verified.</div>
+      <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Twitter/X')">اطلب الآن ←</button></div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- CRYPTO -->
+<section id="crypto">
+<div class="crypto-wrap">
+  <div class="crypto-box reveal">
+    <div class="crypto-inner">
+      <div>
+        <span class="sec-lbl">العملات الرقمية</span>
+        <h2 class="sec-h" style="font-size:2.2rem">تداول العملات<br><span style="color:var(--gd)">الرقمية</span></h2>
+        <p style="color:var(--mt);font-size:.95rem;line-height:1.88;margin-bottom:28px">نوفر خدمة شراء وبيع أبرز العملات الرقمية بطرق دفع جزائرية آمنة. أسعار تنافسية وتسليم فوري.</p>
+        <button class="btn-glow" onclick="openOrder('عملات رقمية')">اشتري / بيع الآن</button>
+      </div>
+      <div class="coin-grid">
+        <div class="coin">
+          <div class="coin-ico" style="background:#F7931A">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path d="M21.2 13.8c.3-2-1.2-3-3.3-3.7l.7-2.8-1.6-.4-.7 2.7-1.3-.3.7-2.7-1.6-.4-.7 2.8-2.6-.6-.4 1.7s1.2.3 1.2.3c.6.2.7.6.7.9l-.7 2.9.2.1H12l-.9 3.6c-.1.2-.3.5-.7.4l-1.2-.3-.5 1.8 2.5.6-.7 2.9 1.6.4.7-2.9 1.3.3-.7 2.8 1.6.4.7-2.9c2.8.5 4.8.3 5.7-2.2.7-2-.1-3.1-1.5-3.9 1.1-.3 1.9-1 2.1-2.5zm-3.7 5.2c-.5 2-3.9.9-5 .6l.9-3.6c1.1.3 4.6.8 4.1 3zm.5-5.2c-.5 1.8-3.3.9-4.2.7l.8-3.3c1 .2 4 .7 3.4 2.6z" fill="#fff"/></svg>
+          </div>
+          <div><span class="coin-nm">Bitcoin</span><span class="coin-sym">BTC</span></div>
+        </div>
+        <div class="coin">
+          <div class="coin-ico" style="background:#627EEA">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16 5v8.5l7.5 3.3L16 5z" fill="rgba(255,255,255,.6)"/><path d="M16 5L8.5 16.8l7.5-3.3V5z" fill="#fff"/><path d="M16 21.7v5.3l7.5-10.4L16 21.7z" fill="rgba(255,255,255,.6)"/><path d="M16 27v-5.3l-7.5-5.1L16 27z" fill="#fff"/></svg>
+          </div>
+          <div><span class="coin-nm">Ethereum</span><span class="coin-sym">ETH</span></div>
+        </div>
+        <div class="coin">
+          <div class="coin-ico" style="background:#26A17B">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#26A17B"/><path d="M17.9 10.4V8H21V6H11v2h3.1v2.4C9.6 10.8 6 12.3 6 14s3.6 3.2 8.1 3.6v8.4h3.8v-8.4c4.5-.4 8.1-1.9 8.1-3.6s-3.6-3.2-8.1-3.6zM16 15.9c-4.6 0-8.4-1.2-8.4-2.6S11.4 10.7 16 10.7s8.4 1.2 8.4 2.6-3.8 2.6-8.4 2.6z" fill="#fff"/></svg>
+          </div>
+          <div><span class="coin-nm">Tether</span><span class="coin-sym">USDT</span></div>
+        </div>
+        <div class="coin">
+          <div class="coin-ico" style="background:linear-gradient(135deg,#9945FF,#14F195)">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="url(#solg)"/><defs><linearGradient id="solg" x1="0" y1="0" x2="32" y2="32"><stop stop-color="#9945FF"/><stop offset="1" stop-color="#14F195"/></linearGradient></defs><path d="M8 20h13l-3 3H8l3-3zM8 12h13l-3 3H8l3-3zM11 16h13l-3 3H11l3-3z" fill="#fff"/></svg>
+          </div>
+          <div><span class="coin-nm">Solana</span><span class="coin-sym">SOL</span></div>
+        </div>
+        <div class="coin">
+          <div class="coin-ico" style="background:#C2A633">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#C2A633"/><text x="9" y="22" font-size="16" fill="#fff" font-family="serif" font-weight="bold">Ð</text></svg>
+          </div>
+          <div><span class="coin-nm">Dogecoin</span><span class="coin-sym">DOGE</span></div>
+        </div>
+        <div class="coin">
+          <div class="coin-ico" style="background:#2775CA">
+            <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#2775CA"/><path d="M16 5a11 11 0 100 22A11 11 0 0016 5zm0 19a8 8 0 110-16 8 8 0 010 16zm1.4-12.7c2.1.3 3.5 1.5 3.8 3.3h-2c-.2-1-1-1.6-1.8-1.8v-1.5zm-2.8 0v1.5c-.9.2-1.6.8-1.8 1.8H10.8c.3-1.8 1.7-3 3.8-3.3zm-3.8 5.7h2c.2 1 1 1.6 1.8 1.8v1.5c-2.1-.3-3.5-1.5-3.8-3.3zm6.6 3.3v-1.5c.9-.2 1.6-.8 1.8-1.8h2c-.3 1.8-1.7 3-3.8 3.3z" fill="#fff"/></svg>
+          </div>
+          <div><span class="coin-nm">USD Coin</span><span class="coin-sym">USDC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- PAYMENT -->
+<section id="payment">
+<div class="pay-sec">
+  <div class="pay-inner">
+    <div class="pay-head reveal">
+      <span class="sec-lbl">طرق الدفع</span>
+      <h2 class="sec-h">ادفع بالطريقة<br><span style="color:var(--cy)">التي تناسبك</span></h2>
+      <p class="sec-p">جميع طرق الدفع المتاحة في الجزائر لراحتك التامة.</p>
+    </div>
+    <div class="pay-grid reveal">
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.15)"/><text x="8" y="38" font-size="28" fill="#fff">📮</text></svg>
+        </div>
+        <span class="pay-nm">Baridimob</span>
+        <span class="pay-sub">CCP بريدي موب</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="8" y="16" width="36" height="22" rx="4" stroke="#fff" stroke-width="2.5" fill="none"/><rect x="8" y="23" width="36" height="5" fill="#fff"/><rect x="14" y="30" width="10" height="3" rx="1.5" fill="rgba(255,255,255,.6)"/></svg>
+        </div>
+        <span class="pay-nm">CIB / Satim</span>
+        <span class="pay-sub">بطاقة بنكية</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#059669,#10b981)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="14" y="8" width="24" height="36" rx="5" stroke="#fff" stroke-width="2.2" fill="none"/><circle cx="26" cy="38" r="2" fill="#fff"/><rect x="20" y="14" width="12" height="2.5" rx="1.2" fill="#fff" opacity=".6"/></svg>
+        </div>
+        <span class="pay-nm">Flexy / Mobilis</span>
+        <span class="pay-sub">رصيد الهاتف</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 12a14 14 0 100 28 14 14 0 000-28zm0 5l4 8h-8l4-8zm-6 12l3-3h6l3 3-6 5-6-5z" stroke="#fff" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <span class="pay-nm">Wafacash</span>
+        <span class="pay-sub">تحويل نقدي</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#26A17B,#1a7a5c)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 10a16 16 0 100 32 16 16 0 000-32zm0 28a12 12 0 110-24 12 12 0 010 24zm1.4-18.7c2.1.3 3.5 1.5 3.8 3.3h-2c-.2-1-1-1.6-1.8-1.8v-1.5zm-2.8 0v1.5c-.9.2-1.6.8-1.8 1.8h-2c.3-1.8 1.7-3 3.8-3.3zm-3.8 5.7h2c.2 1 1 1.6 1.8 1.8v1.5c-2.1-.3-3.5-1.5-3.8-3.3zm6.6 3.3v-1.5c.9-.2 1.6-.8 1.8-1.8h2c-.3 1.8-1.7 3-3.8 3.3z" fill="#fff"/></svg>
+        </div>
+        <span class="pay-nm">USDT / Crypto</span>
+        <span class="pay-sub">عملات رقمية</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#d97706,#f59e0b)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="7" y="16" width="38" height="22" rx="5" stroke="#fff" stroke-width="2" fill="none"/><circle cx="26" cy="27" r="6" stroke="#fff" stroke-width="2" fill="none"/><circle cx="26" cy="27" r="2.5" fill="#fff" opacity=".6"/></svg>
+        </div>
+        <span class="pay-nm">يداً بيد</span>
+        <span class="pay-sub">الجزائر العاصمة</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#6d28d9,#7c3aed)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 12l12 7v14l-12 7-12-7V19l12-7z" stroke="#fff" stroke-width="2" fill="none"/><path d="M26 20v12m-6-8l6 4 6-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <span class="pay-nm">BaridiPay</span>
+        <span class="pay-sub">دفع إلكتروني</span>
+      </div>
+      <div class="pay-card">
+        <div class="pay-ico" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">
+          <svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M14 26h24m-8-8l8 8-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="pay-nm">تحويل CCP</span>
+        <span class="pay-sub">تحويل بريدي مباشر</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+<div class="how-wrap">
+  <div class="how-inner">
+    <div class="how-head reveal">
+      <span class="sec-lbl">كيف نعمل</span>
+      <h2 class="sec-h">4 خطوات فقط<br><span class="grad-text">وتفاعلك في السماء</span></h2>
+    </div>
+    <div class="steps-row reveal">
+      <div class="step"><div class="step-n">01</div><div class="step-t">اختر خدمتك</div><p class="step-d">تصفح خدماتنا واختر المنصة والكمية التي تناسب هدفك.</p></div>
+      <div class="step"><div class="step-n">02</div><div class="step-t">أرسل الطلب</div><p class="step-d">أرسل رابط حسابك أو منشورك وأخبرنا بالكمية المطلوبة.</p></div>
+      <div class="step"><div class="step-n">03</div><div class="step-t">اختر طريقة الدفع</div><p class="step-d">ادفع بالطريقة المناسبة من خيارات الدفع الجزائرية.</p></div>
+      <div class="step"><div class="step-n">04</div><div class="step-t">استقبل التفاعل</div><p class="step-d">يبدأ التسليم فوراً خلال دقائق. نتائج فورية وحقيقية.</p></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testi-wrap">
+  <div class="testi-head reveal">
+    <span class="sec-lbl">آراء العملاء</span>
+    <h2 class="sec-h">ماذا قالوا عنّا</h2>
+  </div>
+  <div class="testi-grid reveal">
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">خدمة ممتازة وسريعة! طلبت لايكات إنستغرام ووصلت خلال 10 دقائق. سأعود بالتأكيد.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">ي</div><div><span class="av-nm">يزيد البومدين</span><span class="av-h">@yazid.bm • الجزائر العاصمة</span></div></div></div>
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">اشتريت مشاهدات تيك توك وطار الفيديو في الترند! الخدمة رائعة والأسعار معقولة.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#ec4899,#f97316)">س</div><div><span class="av-nm">سارة خليفة</span><span class="av-h">@sara.k • وهران</span></div></div></div>
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">أفضل متجر في الجزائر للتفاعل. الدعم سريع الرد والدفع ببريدي موب سهل جداً.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#06b6d4,#10b981)">م</div><div><span class="av-nm">محمد لعريبي</span><span class="av-h">@med.laaribi • قسنطينة</span></div></div></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-box reveal">
+    <h2 class="cta-h">جسمك لا ينتظر<br><span class="grad-text">ابدأ اليوم معنا</span></h2>
+    <p class="cta-p">انضم لأكثر من 15,000 عميل راضٍ في الجزائر. الطلب يستغرق دقيقة واحدة فقط.</p>
+    <div class="cta-btns">
+      <button class="btn-glow" onclick="openOrder()">🚀 ابدأ الآن</button>
+      <a href="https://wa.me/213000000000" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none" class="btn-border">💬 تواصل معنا</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+<div class="ft">
+  <div class="ft-top">
+    <div>
+      <span class="ft-logo">GROWZA</span>
+      <p class="ft-desc">متجرك الأول في الجزائر لشراء التفاعل الرقمي والعملات الرقمية. خدمة سريعة آمنة.</p>
+      <div class="ft-soc">
+        <a href="#"><svg viewBox="0 0 24 24" fill="none"><defs><radialGradient id="igs" cx="30%" cy="107%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#igs)"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" fill="none"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#2AABEE"/><path d="M4 12l14-7-5 14-3-4-6-3z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" fill="none"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5z" fill="#fff"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <div class="ft-col-t">الخدمات</div>
+      <ul class="ft-ul">
+        <li><a href="#">لايكات Instagram</a></li>
+        <li><a href="#">متابعين TikTok</a></li>
+        <li><a href="#">مشاهدات YouTube</a></li>
+        <li><a href="#">Facebook & Telegram</a></li>
+        <li><a href="#">تطوير المواقع</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-t">العملات</div>
+      <ul class="ft-ul">
+        <li><a href="#">Bitcoin BTC</a></li>
+        <li><a href="#">Ethereum ETH</a></li>
+        <li><a href="#">Tether USDT</a></li>
+        <li><a href="#">Solana SOL</a></li>
+        <li><a href="#">Dogecoin DOGE</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ft-col-t">الدعم</div>
+      <ul class="ft-ul">
+        <li><a href="#">تواصل معنا</a></li>
+        <li><a href="#">الأسئلة الشائعة</a></li>
+        <li><a href="#">سياسة الاسترجاع</a></li>
+        <li><a href="#">طرق الدفع</a></li>
+        <li><a href="#">Instagram المتجر</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span class="ft-copy">© 2026 Growza • جميع الحقوق محفوظة • الجزائر 🇩🇿</span>
+    <div class="ft-badges">
+      <span class="fb">✅ آمن 100%</span>
+      <span class="fb">⚡ تسليم فوري</span>
+    </div>
+  </div>
+</div>
+</footer>
+
+<!-- ORDER MODAL -->
+<div class="ovl" id="ovl" onclick="closeOvl(event)">
+  <div class="modal">
+    <button class="m-close" onclick="closeOrder()">✕</button>
+    <div class="m-title">🛒 طلب جديد</div>
+    <div class="m-sub" id="msub">اختر الخدمة وأرسل طلبك عبر واتساب</div>
+    <div class="fg">
+      <label class="fl">نوع الخدمة</label>
+      <select class="fsel" id="srvSel">
+        <option>لايكات Instagram</option>
+        <option>متابعين Instagram</option>
+        <option>مشاهدات Instagram Reels</option>
+        <option>مشاهدات TikTok</option>
+        <option>متابعين TikTok</option>
+        <option>مشاهدات YouTube</option>
+        <option>مشتركين YouTube</option>
+        <option>Facebook</option>
+        <option>Telegram</option>
+        <option>Twitter/X</option>
+        <option>تطوير موقع إلكتروني</option>
+        <option>متجر إلكتروني</option>
+        <option>عملات رقمية</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="fl">رابط الحساب أو المنشور</label>
+      <input class="fi" type="url" placeholder="https://instagram.com/..." />
+    </div>
+    <div class="f2">
+      <div class="fg">
+        <label class="fl">الكمية</label>
+        <input class="fi" type="number" placeholder="مثال: 1000" min="100" />
+      </div>
+      <div class="fg">
+        <label class="fl">طريقة الدفع</label>
+        <select class="fsel">
+          <option>Baridimob / CCP</option>
+          <option>CIB بطاقة بنكية</option>
+          <option>Flexy / رصيد</option>
+          <option>USDT Crypto</option>
+          <option>يداً بيد</option>
+          <option>Wafacash</option>
+          <option>BaridiPay</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">رقم الهاتف (واتساب)</label>
+      <input class="fi" type="tel" placeholder="+213 XX XX XX XX" dir="ltr" />
+    </div>
+    <button class="sub-btn" onclick="submitOrd()">🚀 أرسل الطلب عبر واتساب</button>
+  </div>
+</div>
+
+<script>
+/* ===== STARFIELD CANVAS ===== */
+const canvas = document.getElementById('space-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, stars = [], shootingStars = [];
+
+function resize(){
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+for(let i=0;i<280;i++){
+  stars.push({
+    x:Math.random()*1920,
+    y:Math.random()*1080,
+    r:Math.random()*1.5+0.2,
+    a:Math.random(),
+    sp:Math.random()*0.008+0.002,
+    twinkle:Math.random()*Math.PI*2
+  });
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,W,H);
+  stars.forEach(s=>{
+    s.twinkle+=s.sp;
+    const alpha = s.a*(0.5+0.5*Math.sin(s.twinkle));
+    const r = s.r*(0.8+0.2*Math.sin(s.twinkle*0.7));
+    const colors = ['255,255,255','200,180,255','180,220,255','255,200,220'];
+    const col = colors[Math.floor(s.r>1.2?2:s.r>0.8?1:0)];
+    ctx.beginPath();
+    ctx.arc(s.x%W, s.y%H, r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(${col},${alpha})`;
+    ctx.fill();
+  });
+  stars.filter((s,i)=>i%30===0).forEach(s=>{
+    const alpha = 0.15*(0.5+0.5*Math.sin(s.twinkle));
+    ctx.beginPath();
+    ctx.arc(s.x%W, s.y%H, s.r*4, 0, Math.PI*2);
+    const g = ctx.createRadialGradient(s.x%W,s.y%H,0,s.x%W,s.y%H,s.r*4);
+    g.addColorStop(0,`rgba(168,85,247,${alpha})`);
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle = g;
+    ctx.fill();
+  });
+}
+
+function addShoot(){
+  if(Math.random()>0.97){
+    shootingStars.push({
+      x:Math.random()*W*0.7, y:Math.random()*H*0.4,
+      vx:3+Math.random()*4, vy:1.5+Math.random()*2,
+      len:80+Math.random()*120, life:1
+    });
+  }
+}
+function drawShoot(){
+  shootingStars.forEach((s,i)=>{
+    ctx.beginPath();
+    ctx.moveTo(s.x, s.y);
+    ctx.lineTo(s.x-s.vx*s.len/20, s.y-s.vy*s.len/20);
+    const g = ctx.createLinearGradient(s.x,s.y,s.x-s.vx*s.len/20,s.y-s.vy*s.len/20);
+    g.addColorStop(0,`rgba(255,255,255,${s.life*0.9})`);
+    g.addColorStop(0.3,`rgba(168,85,247,${s.life*0.6})`);
+    g.addColorStop(1,'transparent');
+    ctx.strokeStyle=g;
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+    s.x+=s.vx; s.y+=s.vy; s.life-=0.025;
+    if(s.life<=0) shootingStars.splice(i,1);
+  });
+}
+
+let nebulaTime = 0;
+function drawNebula(){
+  nebulaTime+=0.003;
+  const wisps = [
+    {x:W*0.2, y:H*0.3, r:200, c:'124,58,237', a:0.03},
+    {x:W*0.8, y:H*0.7, r:180, c:'236,72,153', a:0.025},
+    {x:W*0.5, y:H*0.15, r:150, c:'6,182,212', a:0.02},
+  ];
+  wisps.forEach(w=>{
+    const px = w.x + Math.sin(nebulaTime)*30;
+    const py = w.y + Math.cos(nebulaTime*0.7)*20;
+    const g = ctx.createRadialGradient(px,py,0,px,py,w.r);
+    g.addColorStop(0,`rgba(${w.c},${w.a})`);
+    g.addColorStop(1,'transparent');
+    ctx.beginPath();
+    ctx.arc(px,py,w.r,0,Math.PI*2);
+    ctx.fillStyle=g;
+    ctx.fill();
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,W,H);
+  drawNebula();
+  drawStars();
+  addShoot();
+  drawShoot();
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ===== NAV ===== */
+function toggleNav(){document.getElementById('navLinks').classList.toggle('open');}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.boxShadow = window.scrollY>50?'0 4px 30px rgba(0,0,0,.7)':'none';
+});
+
+/* ===== SCROLL REVEAL ===== */
+const ro = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+
+/* ===== COUNTERS ===== */
+function animN(el,t){
+  let n=0,step=t/55;
+  const tm=setInterval(()=>{
+    n+=step;
+    if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(tm);}
+    else el.textContent=Math.floor(n).toLocaleString()+'+';
+  },18);
+}
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  document.querySelectorAll('[data-t]').forEach(el=>animN(el,+el.dataset.t));
+  co.disconnect();
+}});},{threshold:.5});
+const sb=document.querySelector('.stats');
+if(sb)co.observe(sb);
+
+/* ===== FILTER ===== */
+function filt(cat,btn){
+  document.querySelectorAll('.cat').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.sc').forEach(c=>{
+    const show=cat==='all'||c.dataset.cat===cat;
+    c.style.display=show?'':'none';
+    if(show)c.style.animation='fadeUp .4s ease both';
+  });
+}
+
+/* ===== MODAL ===== */
+function openOrder(srv){
+  document.getElementById('ovl').classList.add('show');
+  document.body.style.overflow='hidden';
+  if(srv){
+    document.getElementById('msub').textContent='الخدمة: '+srv;
+    const sel=document.getElementById('srvSel');
+    for(let o of sel.options) if(o.text.includes(srv)){sel.value=o.value;break;}
+  }
+}
+function closeOrder(){document.getElementById('ovl').classList.remove('show');document.body.style.overflow='';}
+function closeOvl(e){if(e.target===document.getElementById('ovl'))closeOrder();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOrder();});
+function submitOrd(){
+  const s=document.getElementById('srvSel').value;
+  const msg=encodeURIComponent(`مرحبا Growza 👋\nأريد طلب: ${s}\nالرجاء التواصل معي للتفاصيل والسعر`);
+  window.open(`https://wa.me/213000000000?text=${msg}`,'_blank');
+  closeOrder();
+}
+</script>
+</body>
+</html>
