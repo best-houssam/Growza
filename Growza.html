@@ -14,192 +14,70 @@
   --card:rgba(120,50,240,0.07);
   --border:rgba(120,50,240,0.22);
   --nav-h:68px;
+  --game:#ff6b2b;--game2:#ff9500;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;font-size:16px;}
 body{background:var(--bg);color:var(--tx);font-family:'Cairo',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-/* ===== SPACE BG ===== */
 #space-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 .nebula{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;animation:nebPulse 8s ease-in-out infinite;}
 .neb1{width:min(900px,100vw);height:min(600px,60vw);top:-200px;right:-200px;background:radial-gradient(ellipse,rgba(124,58,237,.18) 0%,transparent 70%);animation-delay:0s;}
 .neb2{width:min(700px,90vw);height:min(500px,50vw);bottom:-150px;left:-150px;background:radial-gradient(ellipse,rgba(236,72,153,.14) 0%,transparent 70%);animation-delay:3s;}
 .neb3{width:min(500px,80vw);height:min(400px,40vw);top:40%;left:40%;background:radial-gradient(ellipse,rgba(6,182,212,.08) 0%,transparent 70%);animation-delay:5s;}
 @keyframes nebPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
-.grid-bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(rgba(120,50,240,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(120,50,240,.04) 1px,transparent 1px);
-  background-size:60px 60px;
-}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(120,50,240,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(120,50,240,.04) 1px,transparent 1px);background-size:60px 60px;}
 .grid-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(124,58,237,.05) 0%,transparent 70%);}
 
-/* ===== NAV ===== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:300;
-  height:var(--nav-h);
-  padding:0 4%;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(1,3,10,.88);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(120,50,240,.12);
-}
-.logo{
-  font-family:'Syncopate',sans-serif;font-size:clamp(1.2rem,4vw,1.6rem);font-weight:700;
-  background:linear-gradient(120deg,#a855f7,#ec4899,#06b6d4,#a855f7);
-  background-size:300%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  animation:logoShift 4s linear infinite;letter-spacing:4px;
-  flex-shrink:0;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);padding:0 4%;display:flex;align-items:center;justify-content:space-between;background:rgba(1,3,10,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(120,50,240,.12);}
+.logo{font-family:'Syncopate',sans-serif;font-size:clamp(1.2rem,4vw,1.6rem);font-weight:700;background:linear-gradient(120deg,#a855f7,#ec4899,#06b6d4,#a855f7);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:logoShift 4s linear infinite;letter-spacing:4px;flex-shrink:0;}
 @keyframes logoShift{0%{background-position:0%;}100%{background-position:300%;}}
-.nav-links{display:flex;gap:28px;list-style:none;}
-.nav-links a{color:var(--mt);text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:1px;transition:color .3s;white-space:nowrap;}
+.nav-links{display:flex;gap:24px;list-style:none;}
+.nav-links a{color:var(--mt);text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:1px;transition:color .3s;white-space:nowrap;}
 .nav-links a:hover{color:var(--vl);}
-.nav-cta{
-  background:linear-gradient(135deg,var(--v),var(--pk));
-  border:none;color:#fff;padding:9px 22px;
-  font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;
-  border-radius:10px;cursor:pointer;transition:all .3s;
-  box-shadow:0 4px 20px rgba(124,58,237,.35);
-  white-space:nowrap;flex-shrink:0;
-}
+.nav-cta{background:linear-gradient(135deg,var(--v),var(--pk));border:none;color:#fff;padding:9px 22px;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;border-radius:10px;cursor:pointer;transition:all .3s;box-shadow:0 4px 20px rgba(124,58,237,.35);white-space:nowrap;flex-shrink:0;}
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(124,58,237,.6);}
-.ham{
-  display:none;flex-direction:column;gap:5px;cursor:pointer;
-  padding:8px;border-radius:8px;background:rgba(120,50,240,.1);
-  border:1px solid rgba(120,50,240,.2);flex-shrink:0;
-}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border-radius:8px;background:rgba(120,50,240,.1);border:1px solid rgba(120,50,240,.2);flex-shrink:0;}
 .ham span{width:22px;height:2px;background:var(--vl);border-radius:2px;transition:.3s;display:block;}
 .ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
 .ham.open span:nth-child(2){opacity:0;}
 .ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-
-/* Mobile nav drawer */
-.mob-nav{
-  position:fixed;top:var(--nav-h);left:0;right:0;
-  background:rgba(1,3,10,.97);
-  border-bottom:1px solid rgba(120,50,240,.2);
-  z-index:299;padding:16px 4% 20px;
-  transform:translateY(-110%);
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-}
+.mob-nav{position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(1,3,10,.97);border-bottom:1px solid rgba(120,50,240,.2);z-index:299;padding:16px 4% 20px;transform:translateY(-110%);transition:transform .35s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
 .mob-nav.open{transform:translateY(0);}
-.mob-nav a{
-  display:block;padding:14px 0;
-  color:var(--mt);text-decoration:none;font-size:.95rem;font-weight:600;
-  border-bottom:1px solid rgba(255,255,255,.05);transition:color .2s;
-}
+.mob-nav a{display:block;padding:14px 0;color:var(--mt);text-decoration:none;font-size:.95rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,.05);transition:color .2s;}
 .mob-nav a:hover{color:var(--vl);}
-.mob-nav .mob-cta{
-  display:block;margin-top:16px;text-align:center;
-  background:linear-gradient(135deg,var(--v),var(--pk));
-  color:#fff;padding:14px;border-radius:12px;font-weight:700;font-size:1rem;
-  border:none;cursor:pointer;font-family:'Cairo',sans-serif;width:100%;
-}
+.mob-nav .mob-cta{display:block;margin-top:16px;text-align:center;background:linear-gradient(135deg,var(--v),var(--pk));color:#fff;padding:14px;border-radius:12px;font-weight:700;font-size:1rem;border:none;cursor:pointer;font-family:'Cairo',sans-serif;width:100%;}
 
-/* ===== HERO ===== */
-.hero{
-  position:relative;z-index:1;
-  min-height:100svh;display:flex;align-items:center;justify-content:center;
-  text-align:center;
-  padding:calc(var(--nav-h) + 40px) 5% 60px;
-  overflow:hidden;
-}
+.hero{position:relative;z-index:1;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav-h) + 40px) 5% 60px;overflow:hidden;}
 .ring{position:absolute;border-radius:50%;border:1px solid;animation:spin linear infinite;pointer-events:none;}
 .ring1{width:min(700px,90vw);height:min(700px,90vw);border-color:rgba(168,85,247,.06);animation-duration:30s;top:50%;left:50%;transform:translate(-50%,-50%);}
 .ring2{width:min(900px,115vw);height:min(900px,115vw);border-color:rgba(236,72,153,.04);animation-duration:50s;animation-direction:reverse;top:50%;left:50%;transform:translate(-50%,-50%);}
 .ring3{width:min(500px,65vw);height:min(500px,65vw);border-color:rgba(6,182,212,.07);animation-duration:20s;top:50%;left:50%;transform:translate(-50%,-50%);}
 @keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
-.planet{
-  position:absolute;width:min(380px,60vw);height:min(380px,60vw);border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,rgba(168,85,247,.3),rgba(124,58,237,.15),transparent 70%);
-  border:1px solid rgba(168,85,247,.1);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  box-shadow:0 0 100px rgba(124,58,237,.15),inset 0 0 60px rgba(168,85,247,.08);
-  pointer-events:none;animation:planetPulse 6s ease-in-out infinite;
-}
+.planet{position:absolute;width:min(380px,60vw);height:min(380px,60vw);border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(168,85,247,.3),rgba(124,58,237,.15),transparent 70%);border:1px solid rgba(168,85,247,.1);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 100px rgba(124,58,237,.15),inset 0 0 60px rgba(168,85,247,.08);pointer-events:none;animation:planetPulse 6s ease-in-out infinite;}
 @keyframes planetPulse{0%,100%{box-shadow:0 0 100px rgba(124,58,237,.15),inset 0 0 60px rgba(168,85,247,.08);}50%{box-shadow:0 0 150px rgba(124,58,237,.25),inset 0 0 80px rgba(168,85,247,.15);}}
 .hero-content{position:relative;z-index:2;width:100%;}
-.live-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);
-  border-radius:100px;padding:6px 16px;
-  font-size:clamp(.62rem,.9vw+.5rem,.72rem);font-weight:700;letter-spacing:2px;
-  color:var(--gr);text-transform:uppercase;margin-bottom:24px;
-  animation:fadeUp .7s ease both;
-}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);border-radius:100px;padding:6px 16px;font-size:clamp(.62rem,.9vw+.5rem,.72rem);font-weight:700;letter-spacing:2px;color:var(--gr);text-transform:uppercase;margin-bottom:24px;animation:fadeUp .7s ease both;}
 .live-dot{width:7px;height:7px;background:var(--gr);border-radius:50%;flex-shrink:0;animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(16,185,129,.5);}50%{opacity:.6;box-shadow:0 0 0 6px rgba(16,185,129,0);}}
-.hero-title{
-  font-family:'Syncopate',sans-serif;
-  font-size:clamp(3.5rem,14vw,8rem);
-  font-weight:700;line-height:.9;margin-bottom:16px;
-  animation:fadeUp .7s ease .1s both;
-}
+.hero-title{font-family:'Syncopate',sans-serif;font-size:clamp(3.5rem,14vw,8rem);font-weight:700;line-height:.9;margin-bottom:16px;animation:fadeUp .7s ease .1s both;}
 .ht-solid{display:block;background:linear-gradient(135deg,#fff 0%,rgba(168,85,247,.8) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .ht-outline{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(168,85,247,.5);}
-.hero-sub{
-  font-size:clamp(.75rem,2.5vw,.95rem);
-  color:var(--mt);letter-spacing:3px;text-transform:uppercase;
-  margin-bottom:16px;animation:fadeUp .7s ease .2s both;
-  line-height:1.6;
-}
+.hero-sub{font-size:clamp(.75rem,2.5vw,.95rem);color:var(--mt);letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;animation:fadeUp .7s ease .2s both;line-height:1.6;}
 .hero-sub span{color:var(--pk);}
-.hero-desc{
-  max-width:560px;margin:0 auto 36px;
-  font-size:clamp(.9rem,1.5vw,1rem);line-height:1.9;
-  color:rgba(180,195,230,.8);
-  animation:fadeUp .7s ease .3s both;
-}
-.hero-btns{
-  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
-  margin-bottom:48px;animation:fadeUp .7s ease .4s both;
-}
-.btn-glow{
-  background:linear-gradient(135deg,var(--v),var(--pk));
-  border:none;color:#fff;padding:14px 36px;
-  font-family:'Cairo',sans-serif;font-size:clamp(.9rem,2vw,1rem);font-weight:700;
-  border-radius:12px;cursor:pointer;transition:all .3s;
-  box-shadow:0 6px 25px rgba(124,58,237,.4);
-  position:relative;overflow:hidden;
-  min-width:140px;
-}
+.hero-desc{max-width:580px;margin:0 auto 36px;font-size:clamp(.9rem,1.5vw,1rem);line-height:1.9;color:rgba(180,195,230,.8);animation:fadeUp .7s ease .3s both;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .7s ease .4s both;}
+.btn-glow{background:linear-gradient(135deg,var(--v),var(--pk));border:none;color:#fff;padding:14px 36px;font-family:'Cairo',sans-serif;font-size:clamp(.9rem,2vw,1rem);font-weight:700;border-radius:12px;cursor:pointer;transition:all .3s;box-shadow:0 6px 25px rgba(124,58,237,.4);position:relative;overflow:hidden;min-width:140px;}
 .btn-glow::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%);transform:translateX(-150%);transition:.6s;}
 .btn-glow:hover::after{transform:translateX(150%);}
 .btn-glow:hover{transform:translateY(-3px);box-shadow:0 10px 40px rgba(124,58,237,.65);}
-.btn-border{
-  background:transparent;border:1px solid rgba(168,85,247,.35);
-  color:var(--vl);padding:14px 36px;
-  font-family:'Cairo',sans-serif;font-size:clamp(.9rem,2vw,1rem);font-weight:600;
-  border-radius:12px;cursor:pointer;transition:all .3s;
-  min-width:140px;
-}
+.btn-border{background:transparent;border:1px solid rgba(168,85,247,.35);color:var(--vl);padding:14px 36px;font-family:'Cairo',sans-serif;font-size:clamp(.9rem,2vw,1rem);font-weight:600;border-radius:12px;cursor:pointer;transition:all .3s;min-width:140px;}
 .btn-border:hover{background:rgba(168,85,247,.1);border-color:var(--vl);}
-.orbit-platforms{
-  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
-  animation:fadeUp .7s ease .5s both;
-  padding:0 10px;
-}
-.orb-badge{
-  display:flex;align-items:center;gap:7px;padding:8px 14px;
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;font-size:clamp(.75rem,1.5vw,.83rem);font-weight:600;color:var(--mt);
-  transition:all .4s;cursor:default;
-}
+.orbit-platforms{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;animation:fadeUp .7s ease .5s both;padding:0 10px;}
+.orb-badge{display:flex;align-items:center;gap:7px;padding:8px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;font-size:clamp(.75rem,1.5vw,.83rem);font-weight:600;color:var(--mt);transition:all .4s;cursor:default;}
 .orb-badge:hover{border-color:rgba(168,85,247,.4);color:var(--tx);transform:translateY(-3px);}
 .orb-badge svg{width:16px;height:16px;flex-shrink:0;}
-
-/* HUD floating indicators */
-.hud{
-  position:absolute;
-  background:rgba(1,3,10,.8);border:1px solid rgba(168,85,247,.2);
-  border-radius:10px;padding:10px 14px;
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  display:flex;align-items:center;gap:8px;
-  font-size:clamp(.7rem,1.2vw,.8rem);font-weight:700;
-  pointer-events:none;animation:hudFloat linear infinite;
-}
+.hud{position:absolute;background:rgba(1,3,10,.8);border:1px solid rgba(168,85,247,.2);border-radius:10px;padding:10px 14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;gap:8px;font-size:clamp(.7rem,1.2vw,.8rem);font-weight:700;pointer-events:none;animation:hudFloat linear infinite;}
 .hud-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;animation:blink 2s infinite;}
 .hud1{top:20%;left:1%;animation-duration:7s;}
 .hud2{top:26%;right:1%;animation-duration:9s;animation-delay:2s;}
@@ -208,24 +86,11 @@ nav{
 @keyframes hudFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
 
-/* ===== STATS ===== */
-.stats{
-  position:relative;z-index:1;
-  background:rgba(120,50,240,.07);
-  border-top:1px solid rgba(120,50,240,.15);
-  border-bottom:1px solid rgba(120,50,240,.15);
-  padding:40px 5%;
-}
+.stats{position:relative;z-index:1;background:rgba(120,50,240,.07);border-top:1px solid rgba(120,50,240,.15);border-bottom:1px solid rgba(120,50,240,.15);padding:40px 5%;}
 .stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;}
-.stat-n{
-  font-family:'Syncopate',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
-  background:linear-gradient(135deg,var(--vl),var(--pk));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  display:block;margin-bottom:6px;
-}
+.stat-n{font-family:'Syncopate',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;background:linear-gradient(135deg,var(--vl),var(--pk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;margin-bottom:6px;}
 .stat-l{font-size:clamp(.65rem,1.5vw,.75rem);color:var(--mt);letter-spacing:2px;text-transform:uppercase;}
 
-/* ===== SECTION BASE ===== */
 .sec{position:relative;z-index:1;padding:80px 5%;max-width:1340px;margin:0 auto;}
 .sec-lbl{display:inline-flex;align-items:center;gap:8px;font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--vl);font-weight:700;margin-bottom:12px;}
 .sec-lbl::before{content:'//';opacity:.5;}
@@ -235,25 +100,14 @@ nav{
 .reveal{opacity:0;transform:translateY(28px);transition:all .7s ease;}
 .reveal.vis{opacity:1;transform:translateY(0);}
 
-/* ===== SERVICES ===== */
 .srv-head{text-align:center;margin-bottom:50px;}
 .srv-head .sec-p{margin:0 auto;}
 .cats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:40px;padding:0 5%;}
-.cat{
-  background:transparent;border:1px solid var(--border);
-  color:var(--mt);padding:8px 18px;
-  font-family:'Cairo',sans-serif;font-size:clamp(.78rem,1.5vw,.85rem);font-weight:700;
-  border-radius:9px;cursor:pointer;transition:all .3s;
-  display:flex;align-items:center;gap:6px;touch-action:manipulation;
-}
+.cat{background:transparent;border:1px solid var(--border);color:var(--mt);padding:8px 18px;font-family:'Cairo',sans-serif;font-size:clamp(.78rem,1.5vw,.85rem);font-weight:700;border-radius:9px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:6px;touch-action:manipulation;}
 .cat svg{width:15px;height:15px;}
 .cat.on,.cat:hover{background:linear-gradient(135deg,var(--v),var(--pk));border-color:transparent;color:#fff;box-shadow:0 4px 18px rgba(124,58,237,.35);}
 .srv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:18px;}
-.sc{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:24px;
-  position:relative;overflow:hidden;cursor:pointer;transition:all .4s;
-}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative;overflow:hidden;cursor:pointer;transition:all .4s;}
 .sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--v),var(--pk),var(--cy));transform:scaleX(0);transform-origin:right;transition:.4s;}
 .sc:hover::before,.sc:active::before{transform:scaleX(1);transform-origin:left;}
 .sc:hover{border-color:rgba(168,85,247,.45);background:rgba(120,50,240,.12);transform:translateY(-4px);box-shadow:0 18px 45px rgba(0,0,0,.5),0 0 25px rgba(124,58,237,.15);}
@@ -266,12 +120,7 @@ nav{
 .sc-name{font-size:clamp(.95rem,1.5vw,1.05rem);font-weight:700;color:#fff;margin-bottom:6px;}
 .sc-desc{font-size:clamp(.82rem,1.2vw,.86rem);color:var(--mt);line-height:1.72;margin-bottom:18px;}
 .sc-footer{display:flex;align-items:center;justify-content:flex-end;}
-.sc-btn{
-  background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.28);
-  color:var(--vl);padding:8px 18px;border-radius:9px;
-  font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;
-  cursor:pointer;transition:all .3s;touch-action:manipulation;
-}
+.sc-btn{background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.28);color:var(--vl);padding:8px 18px;border-radius:9px;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .3s;touch-action:manipulation;}
 .sc-btn:hover{background:linear-gradient(135deg,var(--v),var(--pk));border-color:transparent;color:#fff;}
 .sc[data-cat="web"]{background:linear-gradient(135deg,rgba(8,145,178,.07),rgba(109,40,217,.06));border-color:rgba(8,145,178,.25);}
 .sc[data-cat="web"]:hover{border-color:rgba(8,145,178,.55);background:linear-gradient(135deg,rgba(8,145,178,.13),rgba(109,40,217,.1));box-shadow:0 18px 45px rgba(0,0,0,.5),0 0 30px rgba(8,145,178,.15);}
@@ -279,41 +128,80 @@ nav{
 .web-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
 .web-tag{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);color:var(--cy);font-size:.64rem;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.5px;}
 
-/* ===== CRYPTO ===== */
-.crypto-wrap{position:relative;z-index:1;padding:0 5% 80px;}
-.crypto-box{
-  max-width:1300px;margin:0 auto;
-  background:linear-gradient(135deg,rgba(124,58,237,.09),rgba(236,72,153,.06),rgba(6,182,212,.04));
-  border:1px solid rgba(124,58,237,.2);
-  border-radius:24px;padding:clamp(28px,5vw,60px);
-  position:relative;overflow:hidden;
-}
-.crypto-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,158,11,.04) 0%,transparent 60%);pointer-events:none;}
-.crypto-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
-.coin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.coin{
-  background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.06);
-  border-radius:13px;padding:16px 14px;
-  display:flex;align-items:center;gap:12px;transition:all .3s;cursor:default;
-}
-.coin:hover{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.05);transform:translateY(-2px);}
-.coin-ico{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0;}
-.coin-ico svg{width:100%;height:100%;}
-.coin-nm{font-size:clamp(.78rem,1.5vw,.82rem);font-weight:700;color:#fff;display:block;}
-.coin-sym{font-size:.68rem;color:var(--mt);}
+/* ===== GAMING SECTION ===== */
+.gaming-section{position:relative;z-index:1;padding:80px 5%;}
+.gaming-section-inner{max-width:1340px;margin:0 auto;}
+.gaming-head{text-align:center;margin-bottom:50px;}
+.gaming-head .sec-p{margin:0 auto;}
+.game-badge{background:linear-gradient(135deg,#ff6b2b,#ff9500);color:#fff;font-size:.6rem;font-weight:700;letter-spacing:1px;padding:4px 9px;border-radius:20px;text-transform:uppercase;white-space:nowrap;}
+
+.game-cats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+.gcat{background:transparent;border:1px solid rgba(255,107,43,.25);color:var(--mt);padding:8px 18px;font-family:'Cairo',sans-serif;font-size:clamp(.78rem,1.5vw,.85rem);font-weight:700;border-radius:9px;cursor:pointer;transition:all .3s;}
+.gcat.on,.gcat:hover{background:linear-gradient(135deg,#ff6b2b,#ff9500);border-color:transparent;color:#fff;box-shadow:0 4px 18px rgba(255,107,43,.4);}
+
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));gap:20px;}
+.game-card{background:rgba(255,107,43,.05);border:1px solid rgba(255,107,43,.2);border-radius:18px;overflow:hidden;position:relative;cursor:pointer;transition:all .4s;}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff6b2b,#ff9500,#ffd700);transform:scaleX(0);transform-origin:right;transition:.4s;}
+.game-card:hover::before{transform:scaleX(1);transform-origin:left;}
+.game-card:hover{border-color:rgba(255,107,43,.5);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 30px rgba(255,107,43,.2);}
+.game-banner{height:140px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.game-logo-svg-wrap{width:90px;height:90px;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));}
+.game-logo-svg-wrap svg{width:100%;height:100%;}
+.game-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(1,3,10,.9));}
+.game-body{padding:18px;}
+.game-name{font-size:1rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.game-sub{font-size:.75rem;color:var(--mt);margin-bottom:14px;}
+.game-packages{display:flex;flex-direction:column;gap:7px;}
+.gpkg{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:9px;padding:9px 12px;transition:all .25s;cursor:pointer;}
+.gpkg:hover{background:rgba(255,107,43,.12);border-color:rgba(255,107,43,.35);}
+.gpkg-amount{font-size:.82rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:6px;}
+.gpkg-currency{font-size:.72rem;color:rgba(255,165,0,.8);font-weight:600;}
+.gpkg-price{text-align:left;}
+.gpkg-dz{font-size:.88rem;font-weight:900;color:#ff9500;}
+.gpkg-usd{font-size:.65rem;color:var(--mt);}
+.game-btn{width:100%;margin-top:14px;background:linear-gradient(135deg,#ff6b2b,#ff9500);border:none;color:#fff;padding:11px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 15px rgba(255,107,43,.35);}
+.game-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(255,107,43,.55);}
+.pop-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#ffd700,#ff9500);color:#000;font-size:.6rem;font-weight:900;padding:4px 10px;border-radius:20px;z-index:3;}
+
+/* ===== CURRENCY RATES BAR ===== */
+.rates-bar{position:relative;z-index:1;background:rgba(255,107,43,.06);border-top:1px solid rgba(255,107,43,.15);border-bottom:1px solid rgba(255,107,43,.15);padding:16px 5%;overflow:hidden;}
+.rates-track{display:flex;gap:40px;animation:scrollRates 30s linear infinite;width:max-content;}
+.rates-track:hover{animation-play-state:paused;}
+.rate-item{display:flex;align-items:center;gap:10px;white-space:nowrap;}
+.rate-flag{font-size:1.1rem;}
+.rate-curr{font-size:.78rem;font-weight:700;color:#fff;}
+.rate-val{font-size:.75rem;color:var(--gd);}
+@keyframes scrollRates{0%{transform:translateX(0);}100%{transform:translateX(-50%)}}
 
 /* ===== PAYMENT ===== */
 .pay-sec{position:relative;z-index:1;background:rgba(6,182,212,.03);border-top:1px solid rgba(6,182,212,.1);border-bottom:1px solid rgba(6,182,212,.1);padding:70px 5%;}
 .pay-inner{max-width:1100px;margin:0 auto;}
 .pay-head{text-align:center;margin-bottom:44px;}
 .pay-head .sec-p{margin:0 auto;text-align:center;}
+.pay-tabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px;}
+.ptab{background:transparent;border:1px solid rgba(6,182,212,.2);color:var(--mt);padding:8px 20px;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;border-radius:9px;cursor:pointer;transition:all .3s;}
+.ptab.on,.ptab:hover{background:rgba(6,182,212,.15);border-color:var(--cy);color:var(--cy);}
 .pay-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(130px,calc(50% - 8px)),1fr));gap:12px;}
 .pay-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:20px 12px;text-align:center;transition:all .3s;}
 .pay-card:hover{border-color:rgba(6,182,212,.35);background:rgba(6,182,212,.06);transform:translateY(-3px);}
-.pay-ico{width:48px;height:48px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;border-radius:12px;}
-.pay-ico svg{width:100%;height:100%;}
+.pay-ico{width:48px;height:48px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:1.6rem;}
 .pay-nm{font-size:clamp(.75rem,1.5vw,.82rem);font-weight:700;color:var(--tx);display:block;margin-bottom:3px;}
 .pay-sub{font-size:.65rem;color:var(--mt);}
+.pay-region{display:none;}
+.pay-region.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(130px,calc(50% - 8px)),1fr));gap:12px;}
+
+/* ===== CRYPTO ===== */
+.crypto-wrap{position:relative;z-index:1;padding:0 5% 80px;}
+.crypto-box{max-width:1300px;margin:0 auto;background:linear-gradient(135deg,rgba(124,58,237,.09),rgba(236,72,153,.06),rgba(6,182,212,.04));border:1px solid rgba(124,58,237,.2);border-radius:24px;padding:clamp(28px,5vw,60px);position:relative;overflow:hidden;}
+.crypto-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,158,11,.04) 0%,transparent 60%);pointer-events:none;}
+.crypto-inner{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
+.coin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.coin{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.06);border-radius:13px;padding:16px 14px;display:flex;align-items:center;gap:12px;transition:all .3s;cursor:default;}
+.coin:hover{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.05);transform:translateY(-2px);}
+.coin-ico{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0;}
+.coin-ico svg{width:100%;height:100%;}
+.coin-nm{font-size:clamp(.78rem,1.5vw,.82rem);font-weight:700;color:#fff;display:block;}
+.coin-sym{font-size:.68rem;color:var(--mt);}
 
 /* ===== HOW ===== */
 .how-wrap{position:relative;z-index:1;padding:80px 5%;}
@@ -342,13 +230,7 @@ nav{
 
 /* ===== CTA ===== */
 .cta-wrap{position:relative;z-index:1;padding:0 5% 80px;}
-.cta-box{
-  max-width:900px;margin:0 auto;text-align:center;
-  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(236,72,153,.1));
-  border:1px solid rgba(124,58,237,.25);
-  border-radius:24px;padding:clamp(40px,8vw,80px) clamp(24px,5vw,40px);
-  position:relative;overflow:hidden;
-}
+.cta-box{max-width:900px;margin:0 auto;text-align:center;background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(236,72,153,.1));border:1px solid rgba(124,58,237,.25);border-radius:24px;padding:clamp(40px,8vw,80px) clamp(24px,5vw,40px);position:relative;overflow:hidden;}
 .cta-box::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(124,58,237,.12) 0%,transparent 70%);pointer-events:none;}
 .cta-h{font-family:'Syncopate',sans-serif;font-size:clamp(1.5rem,4vw,3rem);font-weight:700;margin-bottom:14px;position:relative;z-index:1;line-height:1.2;}
 .cta-p{color:var(--mt);font-size:clamp(.88rem,1.5vw,1rem);line-height:1.85;margin-bottom:36px;position:relative;z-index:1;}
@@ -375,77 +257,40 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
 .fb{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:var(--gr);padding:4px 11px;border-radius:20px;font-size:.66rem;font-weight:700;letter-spacing:1px;}
 
 /* ===== MODAL ===== */
-.ovl{
-  position:fixed;inset:0;background:rgba(0,0,0,.9);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;
-  display:flex;align-items:center;justify-content:center;padding:16px;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-  -webkit-overflow-scrolling:touch;
-}
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:500;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .3s;-webkit-overflow-scrolling:touch;}
 .ovl.show{opacity:1;pointer-events:all;}
-.modal{
-  background:#060c18;border:1px solid rgba(124,58,237,.3);
-  border-radius:20px;width:100%;max-width:520px;
-  max-height:calc(100svh - 32px);overflow-y:auto;
-  padding:clamp(24px,5vw,42px);
-  position:relative;
-  transform:scale(.95) translateY(20px);transition:all .3s;
-}
+.modal{background:#060c18;border:1px solid rgba(124,58,237,.3);border-radius:20px;width:100%;max-width:520px;max-height:calc(100svh - 32px);overflow-y:auto;padding:clamp(24px,5vw,42px);position:relative;transform:scale(.95) translateY(20px);transition:all .3s;}
 .ovl.show .modal{transform:scale(1) translateY(0);}
-.m-close{
-  position:absolute;top:14px;left:14px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  color:var(--mt);width:34px;height:34px;border-radius:50%;
-  font-size:.95rem;cursor:pointer;transition:.2s;
-  display:flex;align-items:center;justify-content:center;
-}
+.m-close{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--mt);width:34px;height:34px;border-radius:50%;font-size:.95rem;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;}
 .m-close:hover{background:rgba(236,72,153,.2);color:var(--pk);}
 .m-title{font-family:'Syncopate',sans-serif;font-size:clamp(1.1rem,3vw,1.4rem);font-weight:700;color:var(--vl);margin-bottom:6px;}
 .m-sub{font-size:.84rem;color:var(--mt);margin-bottom:24px;}
 .fg{margin-bottom:14px;}
 .fl{display:block;font-size:.78rem;font-weight:700;color:var(--tx);margin-bottom:7px;letter-spacing:.5px;}
-.fi,.fsel{
-  width:100%;background:rgba(255,255,255,.04);
-  border:1px solid rgba(124,58,237,.25);border-radius:10px;
-  padding:12px 14px;color:var(--tx);
-  font-family:'Cairo',sans-serif;font-size:.88rem;transition:.3s;outline:none;
-  -webkit-appearance:none;appearance:none;
-}
+.fi,.fsel{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(124,58,237,.25);border-radius:10px;padding:12px 14px;color:var(--tx);font-family:'Cairo',sans-serif;font-size:.88rem;transition:.3s;outline:none;-webkit-appearance:none;appearance:none;}
 .fi:focus,.fsel:focus{border-color:var(--vl);}
 .fsel option{background:#060c18;}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.sub-btn{
-  width:100%;background:linear-gradient(135deg,var(--v),var(--pk));
-  border:none;color:#fff;padding:14px;border-radius:10px;
-  font-family:'Cairo',sans-serif;font-size:.98rem;font-weight:700;
-  cursor:pointer;transition:all .3s;margin-top:8px;
-  box-shadow:0 6px 25px rgba(124,58,237,.4);touch-action:manipulation;
-}
+.sub-btn{width:100%;background:linear-gradient(135deg,var(--v),var(--pk));border:none;color:#fff;padding:14px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:.98rem;font-weight:700;cursor:pointer;transition:all .3s;margin-top:8px;box-shadow:0 6px 25px rgba(124,58,237,.4);touch-action:manipulation;}
 .sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 35px rgba(124,58,237,.6);}
-.sub-btn:active{transform:scale(.98);}
+
+.game-modal-banner{height:80px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:2.5rem;}
+.pkg-selector{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.pkg-opt{background:rgba(255,107,43,.06);border:1px solid rgba(255,107,43,.2);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .25s;}
+.pkg-opt:hover,.pkg-opt.sel{background:rgba(255,107,43,.18);border-color:#ff6b2b;}
+.pkg-opt .amt{font-size:.88rem;font-weight:700;color:#fff;display:block;}
+.pkg-opt .prc{font-size:.8rem;color:#ff9500;font-weight:700;}
 
 /* WhatsApp */
-.wa{
-  position:fixed;bottom:24px;left:24px;z-index:400;
-  width:54px;height:54px;border-radius:50%;
-  background:linear-gradient(135deg,#25d366,#128c7e);
-  display:flex;align-items:center;justify-content:center;
-  text-decoration:none;transition:.3s;
-  box-shadow:0 6px 25px rgba(37,211,102,.5);
-  animation:wap 3s ease-in-out infinite;
-}
+.wa{position:fixed;bottom:24px;left:24px;z-index:400;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:.3s;box-shadow:0 6px 25px rgba(37,211,102,.5);animation:wap 3s ease-in-out infinite;}
 .wa:hover{transform:scale(1.1);}
 .wa svg{width:26px;height:26px;fill:#fff;}
 @keyframes wap{0%,100%{box-shadow:0 6px 25px rgba(37,211,102,.5);}50%{box-shadow:0 6px 40px rgba(37,211,102,.8),0 0 0 10px rgba(37,211,102,.1);}}
 
-/* Scrollbar */
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
 ::-webkit-scrollbar-thumb{background:rgba(168,85,247,.35);border-radius:2px;}
 
-/* ===================== RESPONSIVE ===================== */
-
-/* Tablet: 1024px */
 @media(max-width:1024px){
   .ft-top{grid-template-columns:1fr 1fr;gap:32px;}
   .steps-row{grid-template-columns:repeat(2,1fr);gap:24px;}
@@ -453,8 +298,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   .crypto-inner{grid-template-columns:1fr;gap:36px;}
   .testi-grid{grid-template-columns:1fr 1fr;}
 }
-
-/* Tablet small: 768px */
 @media(max-width:768px){
   :root{--nav-h:60px;}
   .nav-links{display:none;}
@@ -463,102 +306,60 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   .hud{display:none;}
   .ring{display:none;}
   .planet{display:none;}
-
   .hero{padding:calc(var(--nav-h) + 30px) 4% 50px;}
   .hero-btns{gap:10px;}
   .btn-glow,.btn-border{padding:13px 28px;font-size:.92rem;}
-  .orb-badge{padding:6px 11px;font-size:.75rem;gap:6px;}
-  .orbit-platforms{gap:8px;}
-
   .stats-inner{grid-template-columns:repeat(2,1fr);gap:16px;}
   .stats{padding:32px 5%;}
-
   .sec{padding:60px 4%;}
   .cats{padding:0 4%;}
   .srv-grid{grid-template-columns:1fr;}
-
   .crypto-box{padding:28px 20px;}
   .coin-grid{grid-template-columns:1fr 1fr;}
-
   .testi-grid{grid-template-columns:1fr;}
   .how-wrap{padding:60px 4%;}
   .steps-row{grid-template-columns:repeat(2,1fr);gap:20px;}
-
   .ft-top{grid-template-columns:1fr 1fr;gap:28px;}
   .ft-bot{flex-direction:column;text-align:center;}
   .ft-desc{max-width:100%;}
-
   .cta-wrap{padding:0 4% 60px;}
   .testi-wrap{padding:0 4% 60px;}
   .crypto-wrap{padding:0 4% 60px;}
-
   .modal{padding:28px 18px;}
   .f2{grid-template-columns:1fr;}
-  
-  .pay-grid{grid-template-columns:repeat(3,1fr);}
+  .pay-grid,.pay-region{grid-template-columns:repeat(3,1fr);}
   .pay-sec{padding:60px 4%;}
+  .gaming-section{padding:60px 4%;}
+  .games-grid{grid-template-columns:1fr 1fr;}
+  .pkg-selector{grid-template-columns:1fr 1fr;}
 }
-
-/* Mobile: 480px */
 @media(max-width:480px){
   :root{--nav-h:58px;}
-  
   .logo{font-size:1.1rem;letter-spacing:3px;}
-  
-  .live-badge{font-size:.6rem;letter-spacing:1.5px;padding:5px 13px;}
   .hero-title{font-size:clamp(3rem,16vw,5rem);}
-  .hero-sub{letter-spacing:2px;}
-  .hero-desc{font-size:.88rem;margin-bottom:28px;}
   .hero-btns{flex-direction:column;align-items:center;gap:10px;}
   .btn-glow,.btn-border{width:100%;max-width:280px;padding:14px 28px;}
-  .orb-badge{font-size:.72rem;}
-
   .stats-inner{grid-template-columns:repeat(2,1fr);gap:12px;}
   .stat-n{font-size:1.6rem;}
-
   .steps-row{grid-template-columns:1fr;}
-  .step-n{width:62px;height:62px;font-size:1.1rem;}
-
   .coin-grid{grid-template-columns:1fr 1fr;}
-  .coin{padding:14px 12px;gap:10px;}
-  .coin-ico{width:36px;height:36px;}
-
-  .pay-grid{grid-template-columns:repeat(2,1fr);}
+  .pay-grid,.pay-region{grid-template-columns:repeat(2,1fr);}
   .pay-card{padding:18px 10px;}
-  .pay-ico{width:44px;height:44px;}
-
   .testi-grid{grid-template-columns:1fr;}
-
   .ft-top{grid-template-columns:1fr;}
-  .ft-desc{max-width:100%;}
-  
   .cta-btns{flex-direction:column;align-items:center;}
   .cta-btns .btn-glow,.cta-btns .btn-border{width:100%;max-width:280px;}
-
-  .m-title{font-size:1.1rem;}
-  .fi,.fsel{font-size:.85rem;padding:11px 12px;}
-  .sub-btn{font-size:.92rem;}
-
   .wa{bottom:18px;left:18px;width:50px;height:50px;}
   .wa svg{width:24px;height:24px;}
-
-  .cats{gap:6px;}
-  .cat{padding:7px 14px;font-size:.78rem;}
-
-  .sc{padding:20px;}
-  .sc-logo{width:40px;height:40px;}
+  .games-grid{grid-template-columns:1fr;}
+  .pkg-selector{grid-template-columns:1fr 1fr;}
 }
-
-/* Very small: 360px */
 @media(max-width:360px){
   .hero-title{font-size:clamp(2.5rem,17vw,4rem);}
   .stats-inner{grid-template-columns:1fr 1fr;}
-  .pay-grid{grid-template-columns:1fr 1fr;}
-  .orbit-platforms{gap:6px;}
-  .orb-badge{font-size:.68rem;padding:5px 9px;}
+  .pay-grid,.pay-region{grid-template-columns:1fr 1fr;}
+  .games-grid{grid-template-columns:1fr;}
 }
-
-/* Safe area for modern iPhones */
 @supports(padding-bottom:env(safe-area-inset-bottom)){
   footer{padding-bottom:calc(24px + env(safe-area-inset-bottom));}
   .wa{bottom:calc(18px + env(safe-area-inset-bottom));left:calc(18px + env(safe-area-inset-left));}
@@ -573,16 +374,15 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
 <div class="nebula neb2"></div>
 <div class="nebula neb3"></div>
 
-<!-- WhatsApp -->
 <a href="https://wa.me/213000000000" class="wa" title="واتساب">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- NAV -->
 <nav id="nav">
   <div class="logo">GROWZA</div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#services">الخدمات</a></li>
+    <li><a href="#gaming">شحن الألعاب</a></li>
     <li><a href="#crypto">العملات</a></li>
     <li><a href="#payment">الدفع</a></li>
     <li><a href="#how">كيف نعمل</a></li>
@@ -593,84 +393,44 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   </div>
 </nav>
 
-<!-- Mobile nav -->
 <div class="mob-nav" id="mobNav">
   <a href="#services" onclick="closeNav()">⚡ الخدمات</a>
+  <a href="#gaming" onclick="closeNav()">🎮 شحن الألعاب</a>
   <a href="#crypto" onclick="closeNav()">💰 العملات الرقمية</a>
   <a href="#payment" onclick="closeNav()">💳 طرق الدفع</a>
   <a href="#how" onclick="closeNav()">📋 كيف نعمل</a>
   <button class="mob-cta" onclick="closeNav();openOrder()">🚀 اطلب الآن</button>
 </div>
 
-<!-- HERO -->
 <section class="hero">
   <div class="ring ring1"></div>
   <div class="ring ring2"></div>
   <div class="ring ring3"></div>
   <div class="planet"></div>
-
-  <div class="hud hud1">
-    <div class="hud-dot" style="background:#10b981"></div>
-    <span style="color:#10b981">+1,240</span>
-    <span style="color:#6b7ea0">متابع جديد</span>
-  </div>
-  <div class="hud hud2">
-    <div class="hud-dot" style="background:#ec4899"></div>
-    <span style="color:#ec4899">+8,500</span>
-    <span style="color:#6b7ea0">لايك</span>
-  </div>
-  <div class="hud hud3">
-    <div class="hud-dot" style="background:#06b6d4"></div>
-    <span style="color:#06b6d4">+50K</span>
-    <span style="color:#6b7ea0">مشاهدة</span>
-  </div>
-  <div class="hud hud4">
-    <div class="hud-dot" style="background:#f59e0b"></div>
-    <span style="color:#f59e0b">⚡ تسليم فوري</span>
-  </div>
-
+  <div class="hud hud1"><div class="hud-dot" style="background:#10b981"></div><span style="color:#10b981">+1,240</span><span style="color:#6b7ea0">متابع جديد</span></div>
+  <div class="hud hud2"><div class="hud-dot" style="background:#ec4899"></div><span style="color:#ec4899">+8,500</span><span style="color:#6b7ea0">لايك</span></div>
+  <div class="hud hud3"><div class="hud-dot" style="background:#ff6b2b"></div><span style="color:#ff6b2b">🎮 شحن فوري</span></div>
+  <div class="hud hud4"><div class="hud-dot" style="background:#f59e0b"></div><span style="color:#f59e0b">⚡ تسليم فوري</span></div>
   <div class="hero-content">
-    <div class="live-badge"><div class="live-dot"></div>المتجر الأول في الجزائر للتفاعل الرقمي</div>
-    <h1 class="hero-title">
-      <span class="ht-solid">GROW</span>
-      <span class="ht-outline">ZA</span>
-    </h1>
-    <p class="hero-sub">ارفع تفاعلك • <span>وسّع حضورك</span> • انتشر</p>
-    <p class="hero-desc">متجرك الأول لشراء اللايكات، المتابعين، المشاهدات وتداول العملات الرقمية. خدمة فورية آمنة بطرق دفع جزائرية.</p>
+    <div class="live-badge"><div class="live-dot"></div>المتجر الأول في الجزائر للتفاعل الرقمي وشحن الألعاب</div>
+    <h1 class="hero-title"><span class="ht-solid">GROW</span><span class="ht-outline">ZA</span></h1>
+    <p class="hero-sub">ارفع تفاعلك • <span>اشحن ألعابك</span> • انتشر</p>
+    <p class="hero-desc">متجرك الأول لشراء اللايكات، المتابعين، المشاهدات، شحن جميع الألعاب وتداول العملات الرقمية. خدمة فورية آمنة بطرق دفع جزائرية وعربية ودولية.</p>
     <div class="hero-btns">
-      <button class="btn-glow" onclick="openOrder()">🛒 اطلب الآن</button>
-      <button class="btn-border" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">اكتشف الخدمات</button>
+      <button class="btn-glow" onclick="document.getElementById('gaming').scrollIntoView({behavior:'smooth'})">🎮 شحن الألعاب</button>
+      <button class="btn-border" onclick="openOrder()">🛒 اطلب الآن</button>
     </div>
     <div class="orbit-platforms">
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24" fill="none"><defs><radialGradient id="ig1" cx="30%" cy="107%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig1)"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" fill="none"/></svg>
-        Instagram
-      </div>
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#000"/><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg>
-        TikTok
-      </div>
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#FF0000"/><path d="M10 15V9l5.5 3L10 15z" fill="#fff"/></svg>
-        YouTube
-      </div>
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#1877F2"/><path d="M16 8h-2c-.6 0-1 .4-1 1v1.5h3l-.5 3H13V20h-3v-6.5H8v-3h2V9c0-2.2 1.3-3.5 3.3-3.5.9 0 1.7.1 2.7.2V8z" fill="#fff"/></svg>
-        Facebook
-      </div>
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#2AABEE"/><path d="M5.5 11.5l12-5-4 11-3-4-5-2zm0 0l5 2m7-9l-7 6" stroke="#fff" stroke-width="1.2" fill="none" stroke-linejoin="round"/></svg>
-        Telegram
-      </div>
-      <div class="orb-badge">
-        <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5zm-.9 14h1.4L8.1 6H6.6l10 12.5z" fill="#fff"/></svg>
-        X
-      </div>
+      <div class="orb-badge"><span>🎮</span>PUBG Mobile</div>
+      <div class="orb-badge"><span>🔫</span>Free Fire</div>
+      <div class="orb-badge"><span>⚔️</span>Mobile Legends</div>
+      <div class="orb-badge"><span>🌌</span>Genshin Impact</div>
+      <div class="orb-badge"><span>🎯</span>Call of Duty</div>
+      <div class="orb-badge"><span>🏆</span>Clash of Clans</div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
 <div class="stats">
   <div class="stats-inner">
     <div class="reveal"><span class="stat-n" data-t="15000">0</span><span class="stat-l">عميل راضٍ</span></div>
@@ -680,7 +440,6 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   </div>
 </div>
 
-<!-- SERVICES -->
 <section id="services">
 <div class="sec">
   <div class="srv-head reveal">
@@ -697,153 +456,663 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
     <button class="cat" onclick="filt('other',this)">📱 أخرى</button>
   </div>
   <div class="srv-grid reveal" id="srvGrid">
-
     <div class="sc" data-cat="ig">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="#fff" stroke-width="1.8" fill="none"/></svg>
-        </div>
-        <span class="badge-hot">🔥 الأكثر طلباً</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="#fff" stroke-width="1.8" fill="none"/></svg></div><span class="badge-hot">🔥 الأكثر طلباً</span></div>
       <div class="sc-name">لايكات Instagram</div>
       <div class="sc-desc">لايكات حقيقية وآمنة لمنشوراتك. تسليم فوري خلال دقائق. لا خطر على حسابك.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('لايكات Instagram')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="ig">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1m7-1a3 3 0 110 6 3 3 0 010-6z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M20 14v6m-3-3h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </div>
-        <span class="badge-hot">⚡ تسليم سريع</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1m7-1a3 3 0 110 6 3 3 0 010-6z" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M20 14v6m-3-3h6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><span class="badge-hot">⚡ تسليم سريع</span></div>
       <div class="sc-name">متابعين Instagram</div>
       <div class="sc-desc">متابعين يرفعون مصداقية حسابك ويزيدون ظهورك في خوارزمية إنستغرام.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متابعين Instagram')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="ig">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M10 9l5 3-5 3V9z" fill="#fff"/></svg>
-        </div>
-        <span class="badge-new">✨ جديد</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M10 9l5 3-5 3V9z" fill="#fff"/></svg></div><span class="badge-new">✨ جديد</span></div>
       <div class="sc-name">مشاهدات Reels & Stories</div>
       <div class="sc-desc">عزز مشاهدات ريلزك وستوريز إنستغرام وارفع فرص الظهور في صفحة الاستكشاف.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات Instagram Reels')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="tt">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg>
-        </div>
-        <span class="badge-hot">🔥 ترند</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" fill="none"><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg></div><span class="badge-hot">🔥 ترند</span></div>
       <div class="sc-name">مشاهدات TikTok</div>
       <div class="sc-desc">ارفع مشاهدات فيديوهاتك واصل لصفحة "For You" وحقق الانتشار الواسع.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات TikTok')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="tt">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M17 13v6m-3-3h6" stroke="#69C9D0" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </div>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.5" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M3 20c0-3.3 2.7-6 6-6h1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/><path d="M17 13v6m-3-3h6" stroke="#69C9D0" stroke-width="1.8" stroke-linecap="round"/></svg></div></div>
       <div class="sc-name">متابعين TikTok</div>
       <div class="sc-desc">متابعين حقيقيين يساعدونك على الوصول لـ Creator Fund وزيادة تأثيرك.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متابعين TikTok')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="yt">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#FF0000">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/><path d="M10 15V9l5.5 3L10 15z" fill="#FF0000"/></svg>
-        </div>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#FF0000"><svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/><path d="M10 15V9l5.5 3L10 15z" fill="#FF0000"/></svg></div></div>
       <div class="sc-name">مشاهدات YouTube</div>
       <div class="sc-desc">مشاهدات تساعد قناتك على التوصيات والبحث. حقق الـ 4000 ساعة بسرعة.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشاهدات YouTube')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="yt">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#FF0000">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/><path d="M17 14v5m-2.5-2.5h5" stroke="#FF0000" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <span class="badge-new">✨ متاح</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#FF0000"><svg viewBox="0 0 24 24" fill="none"><path d="M21.8 8.4s-.2-1.4-.8-2c-.8-.8-1.7-.8-2-.9C16.8 5 12 5 12 5s-4.8 0-7 .2c-.4.1-1.3.1-2 .9-.7.6-.8 2-.8 2S2 9.9 2 11.5v1.5c0 1.5.2 3 .2 3s.2 1.4.8 2c.8.8 1.8.7 2.3.8C7 19 12 19 12 19s4.8 0 7-.2c.4-.1 1.3-.1 2-.9.7-.6.8-2 .8-2s.2-1.5.2-3v-1.5c0-1.6-.2-3.1-.2-3.1z" fill="#fff"/></svg></div><span class="badge-new">✨ متاح</span></div>
       <div class="sc-name">مشتركين YouTube</div>
       <div class="sc-desc">زد مشتركينك وحقق حد الـ 1000 مشترك لتفعيل تحقيق الدخل على قناتك.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('مشتركين YouTube')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="web">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:linear-gradient(135deg,#0891b2,#6d28d9)">
-          <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="3" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M8 21h8m-4-4v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M7 10l2.5 2.5L7 15" stroke="#06b6d4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 14h4" stroke="#a855f7" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <span class="badge-web">💻 خدمة جديدة</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:linear-gradient(135deg,#0891b2,#6d28d9)"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="3" stroke="#fff" stroke-width="1.8" fill="none"/><path d="M8 21h8m-4-4v4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M7 10l2.5 2.5L7 15" stroke="#06b6d4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 14h4" stroke="#a855f7" stroke-width="1.6" stroke-linecap="round"/></svg></div><span class="badge-web">💻 خدمة جديدة</span></div>
       <div class="sc-name">تطوير المواقع الإلكترونية</div>
       <div class="sc-desc">نصمم ونطور مواقع احترافية متجاوبة وسريعة تعكس هويتك وتجذب عملاءك.</div>
-      <div class="web-tags">
-        <span class="web-tag">HTML/CSS</span><span class="web-tag">React</span><span class="web-tag">WordPress</span><span class="web-tag">متجر</span><span class="web-tag">Landing Page</span>
-      </div>
+      <div class="web-tags"><span class="web-tag">HTML/CSS</span><span class="web-tag">React</span><span class="web-tag">WordPress</span><span class="web-tag">متجر</span><span class="web-tag">Landing Page</span></div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('تطوير موقع إلكتروني')" style="background:rgba(8,145,178,.15);border-color:rgba(8,145,178,.35);color:var(--cy)">اطلب موقعك ←</button></div>
     </div>
-
     <div class="sc" data-cat="web">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:linear-gradient(135deg,#6d28d9,#0891b2)">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1.2" fill="#06b6d4"/><circle cx="19" cy="21" r="1.2" fill="#06b6d4"/></svg>
-        </div>
-        <span class="badge-hot">🔥 الأكثر طلباً</span>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:linear-gradient(135deg,#6d28d9,#0891b2)"><svg viewBox="0 0 24 24" fill="none"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 5h14" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="21" r="1.2" fill="#06b6d4"/><circle cx="19" cy="21" r="1.2" fill="#06b6d4"/></svg></div><span class="badge-hot">🔥 الأكثر طلباً</span></div>
       <div class="sc-name">متجر إلكتروني احترافي</div>
       <div class="sc-desc">موقع بيع أونلاين كامل مع لوحة تحكم، سلة تسوق، وطرق دفع جزائرية مدمجة.</div>
-      <div class="web-tags">
-        <span class="web-tag">Baridimob</span><span class="web-tag">CIB Online</span><span class="web-tag">لوحة تحكم</span><span class="web-tag">SEO</span>
-      </div>
+      <div class="web-tags"><span class="web-tag">Baridimob</span><span class="web-tag">CIB Online</span><span class="web-tag">لوحة تحكم</span><span class="web-tag">SEO</span></div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('متجر إلكتروني')" style="background:rgba(8,145,178,.15);border-color:rgba(8,145,178,.35);color:var(--cy)">اطلب متجرك ←</button></div>
     </div>
-
     <div class="sc" data-cat="other">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#1877F2">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M16 8h-2c-.6 0-1 .4-1 1v1.5h3l-.5 3H13V20h-3v-6.5H8v-3h2V9c0-2.2 1.3-3.5 3.3-3.5.9 0 1.7.1 2.7.2V8z" fill="#fff"/></svg>
-        </div>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#1877F2"><svg viewBox="0 0 24 24" fill="none"><path d="M16 8h-2c-.6 0-1 .4-1 1v1.5h3l-.5 3H13V20h-3v-6.5H8v-3h2V9c0-2.2 1.3-3.5 3.3-3.5.9 0 1.7.1 2.7.2V8z" fill="#fff"/></svg></div></div>
       <div class="sc-name">لايكات & متابعين Facebook</div>
       <div class="sc-desc">عزز صفحتك على فيسبوك بلايكات ومتابعين حقيقيين لزيادة مصداقيتك.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Facebook')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="other">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#2AABEE">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l14-7-5 14-3-4-6-3z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M10 12l4-2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#2AABEE"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l14-7-5 14-3-4-6-3z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" fill="none"/><path d="M10 12l4-2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
       <div class="sc-name">أعضاء Telegram</div>
       <div class="sc-desc">زد أعضاء قناتك أو مجموعتك على تيليغرام وابن مجتمعاً نشطاً وحقيقياً.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Telegram')">اطلب الآن ←</button></div>
     </div>
-
     <div class="sc" data-cat="other">
-      <div class="sc-top">
-        <div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.15)">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5zm-.9 14h1.4L8.1 6H6.6l10 12.5z" fill="#fff"/></svg>
-        </div>
-      </div>
+      <div class="sc-top"><div class="sc-logo" style="background:#000;border:1px solid rgba(255,255,255,.15)"><svg viewBox="0 0 24 24" fill="none"><path d="M17.5 4.5h2.5L14.5 11 21 20h-4.8l-3.7-5-4.2 5H5.5l5.9-6.8L4 4.5h4.9l3.4 4.6L17.5 4.5zm-.9 14h1.4L8.1 6H6.6l10 12.5z" fill="#fff"/></svg></div></div>
       <div class="sc-name">متابعين Twitter / X</div>
       <div class="sc-desc">متابعين يزيدون تأثيرك ومصداقيتك ويساعدونك على الوصول للـ Verified.</div>
       <div class="sc-footer"><button class="sc-btn" onclick="openOrder('Twitter/X')">اطلب الآن ←</button></div>
     </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== GAMING SECTION ===== -->
+<section id="gaming">
+<div class="gaming-section">
+<div class="gaming-section-inner">
+
+  <div class="rates-bar" style="border-radius:14px;margin-bottom:40px;">
+    <div class="rates-track" id="ratesTrack">
+      <div class="rate-item"><span class="rate-flag">🇩🇿</span><span class="rate-curr">DZD</span><span class="rate-val">1 $ = 220 دج</span></div>
+      <div class="rate-item"><span class="rate-flag">🇸🇦</span><span class="rate-curr">SAR</span><span class="rate-val">1 $ = 3.75 ر.س</span></div>
+      <div class="rate-item"><span class="rate-flag">🇦🇪</span><span class="rate-curr">AED</span><span class="rate-val">1 $ = 3.67 د.إ</span></div>
+      <div class="rate-item"><span class="rate-flag">🇪🇬</span><span class="rate-curr">EGP</span><span class="rate-val">1 $ = 49 ج.م</span></div>
+      <div class="rate-item"><span class="rate-flag">🇲🇦</span><span class="rate-curr">MAD</span><span class="rate-val">1 $ = 10 د.م</span></div>
+      <div class="rate-item"><span class="rate-flag">🇹🇳</span><span class="rate-curr">TND</span><span class="rate-val">1 $ = 3.1 د.ت</span></div>
+      <div class="rate-item"><span class="rate-flag">🇰🇼</span><span class="rate-curr">KWD</span><span class="rate-val">1 $ = 0.31 د.ك</span></div>
+      <div class="rate-item"><span class="rate-flag">🇶🇦</span><span class="rate-curr">QAR</span><span class="rate-val">1 $ = 3.64 ر.ق</span></div>
+      <div class="rate-item"><span class="rate-flag">🇩🇿</span><span class="rate-curr">DZD</span><span class="rate-val">1 $ = 220 دج</span></div>
+      <div class="rate-item"><span class="rate-flag">🇸🇦</span><span class="rate-curr">SAR</span><span class="rate-val">1 $ = 3.75 ر.س</span></div>
+      <div class="rate-item"><span class="rate-flag">🇦🇪</span><span class="rate-curr">AED</span><span class="rate-val">1 $ = 3.67 د.إ</span></div>
+      <div class="rate-item"><span class="rate-flag">🇪🇬</span><span class="rate-curr">EGP</span><span class="rate-val">1 $ = 49 ج.م</span></div>
+      <div class="rate-item"><span class="rate-flag">🇲🇦</span><span class="rate-curr">MAD</span><span class="rate-val">1 $ = 10 د.م</span></div>
+      <div class="rate-item"><span class="rate-flag">🇹🇳</span><span class="rate-curr">TND</span><span class="rate-val">1 $ = 3.1 د.ت</span></div>
+    </div>
+  </div>
+
+  <div class="gaming-head reveal">
+    <span class="sec-lbl">شحن الألعاب</span>
+    <h2 class="sec-h">شحن فوري لـ<br><span style="background:linear-gradient(135deg,#ff6b2b,#ffd700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">جميع الألعاب</span></h2>
+    <p class="sec-p" style="margin:0 auto">أسعار تنافسية • تسليم فوري • 1 دولار = 220 دينار جزائري</p>
+  </div>
+
+  <div class="game-cats">
+    <button class="gcat on" onclick="gfilt('all',this)">🎮 الكل</button>
+    <button class="gcat" onclick="gfilt('battle',this)">🔫 Battle Royale</button>
+    <button class="gcat" onclick="gfilt('moba',this)">⚔️ MOBA</button>
+    <button class="gcat" onclick="gfilt('rpg',this)">🌌 RPG / Open World</button>
+    <button class="gcat" onclick="gfilt('strategy',this)">🏰 Strategy</button>
+    <button class="gcat" onclick="gfilt('cards',this)">🃏 Cards / Other</button>
+  </div>
+
+  <div class="games-grid reveal" id="gamesGrid">
+
+    <!-- PUBG Mobile -->
+    <div class="game-card" data-gcat="battle">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a1a2e,#f7b733,#fc4a1a)">
+        <span class="pop-badge">🔥 الأكثر</span>
+        <div class="game-logo-svg-wrap">
+          <!-- PUBG Mobile Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#f5a623" stroke="#c8821e" stroke-width="2"/>
+            <circle cx="50" cy="50" r="38" fill="#1a1a2e"/>
+            <!-- Helmet shape -->
+            <ellipse cx="50" cy="42" rx="24" ry="20" fill="#f5a623"/>
+            <ellipse cx="50" cy="44" rx="20" ry="14" fill="#1a1a2e"/>
+            <!-- Visor -->
+            <rect x="32" y="52" width="36" height="8" rx="4" fill="#f5a623"/>
+            <!-- Eye slit -->
+            <rect x="35" y="54" width="30" height="4" rx="2" fill="#1a1a2e"/>
+            <!-- Text PUBG -->
+            <text x="50" y="80" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#f5a623" letter-spacing="1">PUBG</text>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">PUBG Mobile</div>
+        <div class="game-sub">UC – Unknown Cash</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('PUBG Mobile','60 UC','132 دج')"><div class="gpkg-amount">60 <span class="gpkg-currency">UC</span></div><div class="gpkg-price"><div class="gpkg-dz">132 دج</div><div class="gpkg-usd">~0.6$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('PUBG Mobile','325 UC','715 دج')"><div class="gpkg-amount">325 <span class="gpkg-currency">UC</span></div><div class="gpkg-price"><div class="gpkg-dz">715 دج</div><div class="gpkg-usd">~3.25$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('PUBG Mobile','660 UC','1,320 دج')"><div class="gpkg-amount">660 <span class="gpkg-currency">UC</span></div><div class="gpkg-price"><div class="gpkg-dz">1,320 دج</div><div class="gpkg-usd">~6$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('PUBG Mobile','1800 UC','3,520 دج')"><div class="gpkg-amount">1800 <span class="gpkg-currency">UC</span></div><div class="gpkg-price"><div class="gpkg-dz">3,520 دج</div><div class="gpkg-usd">~16$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('PUBG Mobile','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Free Fire -->
+    <div class="game-card" data-gcat="battle">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0f0c29,#ff4e50,#f9d423)">
+        <span class="pop-badge">⚡ ترند</span>
+        <div class="game-logo-svg-wrap">
+          <!-- Free Fire Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#ff4e00" stroke="#cc3e00" stroke-width="2"/>
+            <!-- Flame shape -->
+            <path d="M50 15 C50 15 35 30 32 48 C30 58 35 65 42 68 C38 62 40 55 45 52 C44 60 48 68 55 70 C62 72 70 65 68 52 C67 45 63 40 60 36 C63 44 60 50 55 50 C58 40 55 28 50 15Z" fill="#ffd700"/>
+            <path d="M50 25 C50 25 40 38 38 50 C37 57 41 62 46 63 C44 59 46 54 50 52 C49 58 52 64 57 65 C62 66 66 61 64 52 C63 46 60 42 57 38 C59 44 57 49 53 49 C55 41 53 32 50 25Z" fill="#ff6b00"/>
+            <text x="50" y="90" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#fff" letter-spacing="0">FREE FIRE</text>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Free Fire</div>
+        <div class="game-sub">ماسات – Diamonds</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Free Fire','100 ماسة','220 دج')"><div class="gpkg-amount">100 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Free Fire','310 ماسة','550 دج')"><div class="gpkg-amount">310 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Free Fire','520 ماسة','880 دج')"><div class="gpkg-amount">520 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">880 دج</div><div class="gpkg-usd">~4$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Free Fire','1060 ماسة','1,760 دج')"><div class="gpkg-amount">1060 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">1,760 دج</div><div class="gpkg-usd">~8$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Free Fire','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Mobile Legends -->
+    <div class="game-card" data-gcat="moba">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0d0d0d,#c0392b,#e74c3c)">
+        <div class="game-logo-svg-wrap">
+          <!-- Mobile Legends Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#c0392b" stroke="#8b0000" stroke-width="2"/>
+            <!-- Shield shape -->
+            <path d="M50 12 L80 28 L80 55 C80 72 65 85 50 90 C35 85 20 72 20 55 L20 28 Z" fill="#8b0000"/>
+            <path d="M50 18 L74 32 L74 55 C74 69 62 80 50 84 C38 80 26 69 26 55 L26 32 Z" fill="#c0392b"/>
+            <!-- Sword -->
+            <rect x="47" y="22" width="6" height="48" rx="3" fill="#ffd700"/>
+            <polygon points="50,18 44,28 56,28" fill="#ffd700"/>
+            <rect x="38" y="50" width="24" height="5" rx="2" fill="#ffd700"/>
+            <text x="50" y="100" text-anchor="middle" font-family="Arial,sans-serif" font-size="0" fill="#fff">ML</text>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Mobile Legends</div>
+        <div class="game-sub">Diamonds – الماس</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Mobile Legends','86 ماسة','220 دج')"><div class="gpkg-amount">86 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Mobile Legends','172 ماسة','418 دج')"><div class="gpkg-amount">172 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">418 دج</div><div class="gpkg-usd">~1.9$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Mobile Legends','257 ماسة','616 دج')"><div class="gpkg-amount">257 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">616 دج</div><div class="gpkg-usd">~2.8$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Mobile Legends','706 ماسة','1,540 دج')"><div class="gpkg-amount">706 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">1,540 دج</div><div class="gpkg-usd">~7$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Mobile Legends','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Genshin Impact -->
+    <div class="game-card" data-gcat="rpg">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0f3460,#533483,#e94560)">
+        <div class="game-logo-svg-wrap">
+          <!-- Genshin Impact Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1a0a3e" stroke="#533483" stroke-width="2"/>
+            <!-- Wind symbol / Anemo -->
+            <circle cx="50" cy="50" r="30" fill="none" stroke="#7cd8e8" stroke-width="2" opacity="0.5"/>
+            <!-- Stylized G -->
+            <path d="M50 20 C32 20 18 34 18 50 C18 66 32 80 50 80 C61 80 70 75 76 67 L76 50 L54 50 L54 58 L68 58 C65 66 58 70 50 70 C37 70 28 61 28 50 C28 39 37 30 50 30 C57 30 63 33 67 38 L74 32 C68 25 59 20 50 20Z" fill="#7cd8e8"/>
+            <!-- Star accent -->
+            <polygon points="50,8 52,14 58,14 53,18 55,24 50,20 45,24 47,18 42,14 48,14" fill="#ffd700" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Genshin Impact</div>
+        <div class="game-sub">Genesis Crystals</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Genshin Impact','60 Crystal','132 دج')"><div class="gpkg-amount">60 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">132 دج</div><div class="gpkg-usd">~0.6$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Genshin Impact','330 Crystal','715 دج')"><div class="gpkg-amount">330 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">715 دج</div><div class="gpkg-usd">~3.25$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Genshin Impact','1090 Crystal','2,200 دج')"><div class="gpkg-amount">1090 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">2,200 دج</div><div class="gpkg-usd">~10$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Genshin Impact','2240 Crystal','4,400 دج')"><div class="gpkg-amount">2240 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">4,400 دج</div><div class="gpkg-usd">~20$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Genshin Impact','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Call of Duty Mobile -->
+    <div class="game-card" data-gcat="battle">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a1a1a,#c0392b,#2c3e50)">
+        <div class="game-logo-svg-wrap">
+          <!-- COD Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1a1a1a" stroke="#c0392b" stroke-width="3"/>
+            <!-- COD skull/crosshair -->
+            <circle cx="50" cy="50" r="28" fill="none" stroke="#c0392b" stroke-width="2"/>
+            <!-- Crosshair lines -->
+            <line x1="50" y1="15" x2="50" y2="35" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="50" y1="65" x2="50" y2="85" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="15" y1="50" x2="35" y2="50" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+            <line x1="65" y1="50" x2="85" y2="50" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+            <!-- Inner dot -->
+            <circle cx="50" cy="50" r="6" fill="#c0392b"/>
+            <circle cx="50" cy="50" r="3" fill="#fff"/>
+            <!-- Skull eyes -->
+            <circle cx="44" cy="46" r="4" fill="#fff" opacity="0.8"/>
+            <circle cx="56" cy="46" r="4" fill="#fff" opacity="0.8"/>
+            <circle cx="44" cy="47" r="2" fill="#1a1a1a"/>
+            <circle cx="56" cy="47" r="2" fill="#1a1a1a"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Call of Duty Mobile</div>
+        <div class="game-sub">CP – COD Points</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Call of Duty Mobile','80 CP','176 دج')"><div class="gpkg-amount">80 <span class="gpkg-currency">CP</span></div><div class="gpkg-price"><div class="gpkg-dz">176 دج</div><div class="gpkg-usd">~0.8$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Call of Duty Mobile','400 CP','880 دج')"><div class="gpkg-amount">400 <span class="gpkg-currency">CP</span></div><div class="gpkg-price"><div class="gpkg-dz">880 دج</div><div class="gpkg-usd">~4$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Call of Duty Mobile','800 CP','1,650 دج')"><div class="gpkg-amount">800 <span class="gpkg-currency">CP</span></div><div class="gpkg-price"><div class="gpkg-dz">1,650 دج</div><div class="gpkg-usd">~7.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Call of Duty Mobile','2000 CP','3,960 دج')"><div class="gpkg-amount">2000 <span class="gpkg-currency">CP</span></div><div class="gpkg-price"><div class="gpkg-dz">3,960 دج</div><div class="gpkg-usd">~18$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Call of Duty Mobile','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Clash of Clans -->
+    <div class="game-card" data-gcat="strategy">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a472a,#27ae60,#f39c12)">
+        <div class="game-logo-svg-wrap">
+          <!-- Clash of Clans Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#27ae60" stroke="#1a7a40" stroke-width="2"/>
+            <!-- Shield -->
+            <path d="M50 10 L82 24 L82 54 C82 72 67 86 50 92 C33 86 18 72 18 54 L18 24 Z" fill="#f39c12"/>
+            <path d="M50 16 L76 28 L76 54 C76 69 63 81 50 86 C37 81 24 69 24 54 L24 28 Z" fill="#e67e22"/>
+            <!-- Crest / Barbarian King silhouette -->
+            <ellipse cx="50" cy="42" rx="16" ry="16" fill="#3d2b1f"/>
+            <ellipse cx="50" cy="40" rx="14" ry="12" fill="#5c3d2a"/>
+            <!-- Crown -->
+            <path d="M36 34 L40 26 L44 32 L50 24 L56 32 L60 26 L64 34 L60 38 L50 36 L40 38 Z" fill="#ffd700"/>
+            <!-- Eyes -->
+            <circle cx="45" cy="44" r="3" fill="#fff"/>
+            <circle cx="55" cy="44" r="3" fill="#fff"/>
+            <circle cx="45" cy="44" r="1.5" fill="#222"/>
+            <circle cx="55" cy="44" r="1.5" fill="#222"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Clash of Clans</div>
+        <div class="game-sub">Gems – الجواهر</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Clash of Clans','80 Gems','110 دج')"><div class="gpkg-amount">80 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">110 دج</div><div class="gpkg-usd">~0.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash of Clans','500 Gems','550 دج')"><div class="gpkg-amount">500 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash of Clans','1200 Gems','1,100 دج')"><div class="gpkg-amount">1200 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash of Clans','2500 Gems','2,200 دج')"><div class="gpkg-amount">2500 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">2,200 دج</div><div class="gpkg-usd">~10$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Clash of Clans','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Valorant -->
+    <div class="game-card" data-gcat="battle">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0a0a0a,#ff4655,#bd3944)">
+        <div class="game-logo-svg-wrap">
+          <!-- Valorant Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#0f0f0f" stroke="#ff4655" stroke-width="2"/>
+            <!-- V shape (Valorant logo) -->
+            <polygon points="15,20 50,80 85,20 72,20 50,58 28,20" fill="#ff4655"/>
+            <!-- Inner V highlight -->
+            <polygon points="22,20 50,68 78,20 70,20 50,60 30,20" fill="#0f0f0f"/>
+            <!-- Slash accent -->
+            <line x1="45" y1="15" x2="60" y2="85" stroke="#ff4655" stroke-width="3" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Valorant</div>
+        <div class="game-sub">VP – Valorant Points</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Valorant','475 VP','440 دج')"><div class="gpkg-amount">475 <span class="gpkg-currency">VP</span></div><div class="gpkg-price"><div class="gpkg-dz">440 دج</div><div class="gpkg-usd">~2$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Valorant','1000 VP','880 دج')"><div class="gpkg-amount">1000 <span class="gpkg-currency">VP</span></div><div class="gpkg-price"><div class="gpkg-dz">880 دج</div><div class="gpkg-usd">~4$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Valorant','2050 VP','1,760 دج')"><div class="gpkg-amount">2050 <span class="gpkg-currency">VP</span></div><div class="gpkg-price"><div class="gpkg-dz">1,760 دج</div><div class="gpkg-usd">~8$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Valorant','5350 VP','4,400 دج')"><div class="gpkg-amount">5350 <span class="gpkg-currency">VP</span></div><div class="gpkg-price"><div class="gpkg-dz">4,400 دج</div><div class="gpkg-usd">~20$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Valorant','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Honor of Kings -->
+    <div class="game-card" data-gcat="moba">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0a0a2e,#c0a020,#8b0000)">
+        <div class="game-logo-svg-wrap">
+          <!-- Honor of Kings Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#0a0a2e" stroke="#c0a020" stroke-width="2"/>
+            <!-- Crown -->
+            <path d="M20 65 L20 45 L35 55 L50 30 L65 55 L80 45 L80 65 Z" fill="#c0a020"/>
+            <path d="M22 63 L22 48 L35 57 L50 34 L65 57 L78 48 L78 63 Z" fill="#ffd700"/>
+            <!-- Gems on crown -->
+            <circle cx="50" cy="38" r="5" fill="#e94560"/>
+            <circle cx="35" cy="58" r="4" fill="#4fc3f7"/>
+            <circle cx="65" cy="58" r="4" fill="#4fc3f7"/>
+            <!-- Band -->
+            <rect x="20" y="62" width="60" height="8" rx="4" fill="#c0a020"/>
+            <rect x="22" y="63" width="56" height="6" rx="3" fill="#ffd700"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Honor of Kings</div>
+        <div class="game-sub">Tokens – رموز</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Honor of Kings','100 Tokens','220 دج')"><div class="gpkg-amount">100 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Honor of Kings','300 Tokens','660 دج')"><div class="gpkg-amount">300 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">660 دج</div><div class="gpkg-usd">~3$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Honor of Kings','680 Tokens','1,320 دج')"><div class="gpkg-amount">680 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">1,320 دج</div><div class="gpkg-usd">~6$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Honor of Kings','1500 Tokens','2,970 دج')"><div class="gpkg-amount">1500 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">2,970 دج</div><div class="gpkg-usd">~13.5$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Honor of Kings','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- League of Legends -->
+    <div class="game-card" data-gcat="moba">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0a1628,#c89b3c,#785a28)">
+        <div class="game-logo-svg-wrap">
+          <!-- LoL Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#0a1628" stroke="#c89b3c" stroke-width="2"/>
+            <!-- Shield outline -->
+            <path d="M50 12 L78 26 L78 52 C78 68 65 80 50 88 C35 80 22 68 22 52 L22 26 Z" fill="none" stroke="#c89b3c" stroke-width="3"/>
+            <!-- Inner design -->
+            <path d="M50 20 L72 32 L72 52 C72 65 62 75 50 82 C38 75 28 65 28 52 L28 32 Z" fill="#0f2244"/>
+            <!-- LoL symbol - stylized L shape -->
+            <rect x="35" y="35" width="8" height="30" rx="2" fill="#c89b3c"/>
+            <rect x="35" y="57" width="20" height="8" rx="2" fill="#c89b3c"/>
+            <!-- Right element -->
+            <rect x="62" y="35" width="8" height="30" rx="2" fill="#c89b3c" opacity="0.6"/>
+            <!-- Gold accent dots -->
+            <circle cx="50" cy="50" r="3" fill="#c89b3c"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">League of Legends</div>
+        <div class="game-sub">RP – Riot Points</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('League of Legends','650 RP','605 دج')"><div class="gpkg-amount">650 <span class="gpkg-currency">RP</span></div><div class="gpkg-price"><div class="gpkg-dz">605 دج</div><div class="gpkg-usd">~2.75$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('League of Legends','1380 RP','1,100 دج')"><div class="gpkg-amount">1380 <span class="gpkg-currency">RP</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('League of Legends','3500 RP','2,640 دج')"><div class="gpkg-amount">3500 <span class="gpkg-currency">RP</span></div><div class="gpkg-price"><div class="gpkg-dz">2,640 دج</div><div class="gpkg-usd">~12$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('League of Legends','7200 RP','5,280 دج')"><div class="gpkg-amount">7200 <span class="gpkg-currency">RP</span></div><div class="gpkg-price"><div class="gpkg-dz">5,280 دج</div><div class="gpkg-usd">~24$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('League of Legends','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Fortnite -->
+    <div class="game-card" data-gcat="battle">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a0a4a,#7209b7,#f72585)">
+        <div class="game-logo-svg-wrap">
+          <!-- Fortnite Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1a0a4a" stroke="#7209b7" stroke-width="2"/>
+            <!-- F letter stylized -->
+            <rect x="28" y="18" width="44" height="12" rx="3" fill="#f72585"/>
+            <rect x="28" y="18" width="14" height="64" rx="3" fill="#f72585"/>
+            <rect x="28" y="46" width="36" height="11" rx="3" fill="#f72585"/>
+            <!-- Lightning bolt accent -->
+            <polygon points="70,20 58,48 65,48 53,80 78,45 70,45" fill="#ffd700" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Fortnite</div>
+        <div class="game-sub">V-Bucks</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Fortnite','1000 V-Bucks','880 دج')"><div class="gpkg-amount">1000 <span class="gpkg-currency">V</span></div><div class="gpkg-price"><div class="gpkg-dz">880 دج</div><div class="gpkg-usd">~4$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Fortnite','2800 V-Bucks','2,200 دج')"><div class="gpkg-amount">2800 <span class="gpkg-currency">V</span></div><div class="gpkg-price"><div class="gpkg-dz">2,200 دج</div><div class="gpkg-usd">~10$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Fortnite','5000 V-Bucks','3,850 دج')"><div class="gpkg-amount">5000 <span class="gpkg-currency">V</span></div><div class="gpkg-price"><div class="gpkg-dz">3,850 دج</div><div class="gpkg-usd">~17.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Fortnite','13500 V-Bucks','9,900 دج')"><div class="gpkg-amount">13500 <span class="gpkg-currency">V</span></div><div class="gpkg-price"><div class="gpkg-dz">9,900 دج</div><div class="gpkg-usd">~45$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Fortnite','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Clash Royale -->
+    <div class="game-card" data-gcat="strategy">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a0533,#8e44ad,#3498db)">
+        <div class="game-logo-svg-wrap">
+          <!-- Clash Royale Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1a0533" stroke="#8e44ad" stroke-width="2"/>
+            <!-- Royal crown -->
+            <path d="M15 70 L15 50 L30 62 L50 35 L70 62 L85 50 L85 70 Z" fill="#8e44ad"/>
+            <path d="M17 68 L17 53 L30 64 L50 39 L70 64 L83 53 L83 68 Z" fill="#b39ddb"/>
+            <!-- Jewels -->
+            <circle cx="50" cy="43" r="6" fill="#f72585"/>
+            <circle cx="30" cy="64" r="5" fill="#3498db"/>
+            <circle cx="70" cy="64" r="5" fill="#3498db"/>
+            <!-- Crown band -->
+            <rect x="15" y="67" width="70" height="9" rx="4" fill="#8e44ad"/>
+            <rect x="17" y="68" width="66" height="7" rx="3" fill="#b39ddb"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Clash Royale</div>
+        <div class="game-sub">Gems – الجواهر</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Clash Royale','80 Gems','110 دج')"><div class="gpkg-amount">80 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">110 دج</div><div class="gpkg-usd">~0.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash Royale','500 Gems','550 دج')"><div class="gpkg-amount">500 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash Royale','1200 Gems','1,100 دج')"><div class="gpkg-amount">1200 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Clash Royale','6500 Gems','5,500 دج')"><div class="gpkg-amount">6500 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">5,500 دج</div><div class="gpkg-usd">~25$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Clash Royale','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Brawl Stars -->
+    <div class="game-card" data-gcat="strategy">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0d1b2a,#e94560,#f4d03f)">
+        <div class="game-logo-svg-wrap">
+          <!-- Brawl Stars Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#0d1b2a" stroke="#f4d03f" stroke-width="2"/>
+            <!-- Star burst -->
+            <polygon points="50,10 56,38 84,38 62,56 70,84 50,66 30,84 38,56 16,38 44,38" fill="#f4d03f"/>
+            <polygon points="50,18 55,40 76,40 60,54 66,76 50,62 34,76 40,54 24,40 45,40" fill="#e94560"/>
+            <!-- B letter -->
+            <text x="50" y="62" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="22" font-weight="900" fill="#fff">B</text>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Brawl Stars</div>
+        <div class="game-sub">Gems – الجواهر</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Brawl Stars','30 Gems','88 دج')"><div class="gpkg-amount">30 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">88 دج</div><div class="gpkg-usd">~0.4$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Brawl Stars','80 Gems','220 دج')"><div class="gpkg-amount">80 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Brawl Stars','170 Gems','440 دج')"><div class="gpkg-amount">170 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">440 دج</div><div class="gpkg-usd">~2$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Brawl Stars','360 Gems','880 دج')"><div class="gpkg-amount">360 <span class="gpkg-currency">💎</span></div><div class="gpkg-price"><div class="gpkg-dz">880 دج</div><div class="gpkg-usd">~4$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Brawl Stars','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Minecraft -->
+    <div class="game-card" data-gcat="rpg">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1a3a1a,#27ae60,#5dade2)">
+        <div class="game-logo-svg-wrap">
+          <!-- Minecraft Logo SVG (Creeper face) -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1a3a1a" stroke="#27ae60" stroke-width="2"/>
+            <!-- Creeper face pixelated -->
+            <rect x="25" y="18" width="50" height="50" rx="4" fill="#3d8b3d"/>
+            <!-- Eyes -->
+            <rect x="32" y="28" width="12" height="12" fill="#111"/>
+            <rect x="56" y="28" width="12" height="12" fill="#111"/>
+            <!-- Mouth -->
+            <rect x="40" y="42" width="8" height="8" fill="#111"/>
+            <rect x="32" y="50" width="8" height="8" fill="#111"/>
+            <rect x="60" y="50" width="8" height="8" fill="#111"/>
+            <rect x="40" y="58" width="20" height="8" fill="#111"/>
+            <!-- Grass bottom -->
+            <rect x="25" y="68" width="50" height="8" rx="2" fill="#5dade2"/>
+            <text x="50" y="92" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#27ae60">MINECRAFT</text>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Minecraft</div>
+        <div class="game-sub">Minecoins</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Minecraft','320 Minecoins','220 دج')"><div class="gpkg-amount">320 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Minecraft','830 Minecoins','550 دج')"><div class="gpkg-amount">830 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Minecraft','1710 Minecoins','1,100 دج')"><div class="gpkg-amount">1710 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Minecraft','5530 Minecoins','3,300 دج')"><div class="gpkg-amount">5530 <span class="gpkg-currency">🪙</span></div><div class="gpkg-price"><div class="gpkg-dz">3,300 دج</div><div class="gpkg-usd">~15$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Minecraft','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Arena of Valor -->
+    <div class="game-card" data-gcat="moba">
+      <div class="game-banner" style="background:linear-gradient(135deg,#0a0a1a,#ff6b35,#004e89)">
+        <div class="game-logo-svg-wrap">
+          <!-- Arena of Valor Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#0a0a1a" stroke="#ff6b35" stroke-width="2"/>
+            <!-- Colosseum / Arena arches -->
+            <ellipse cx="50" cy="58" rx="36" ry="26" fill="none" stroke="#ff6b35" stroke-width="3"/>
+            <!-- Pillars -->
+            <rect x="22" y="40" width="6" height="30" rx="2" fill="#ff6b35"/>
+            <rect x="72" y="40" width="6" height="30" rx="2" fill="#ff6b35"/>
+            <rect x="34" y="36" width="6" height="34" rx="2" fill="#ff6b35" opacity="0.7"/>
+            <rect x="60" y="36" width="6" height="34" rx="2" fill="#ff6b35" opacity="0.7"/>
+            <rect x="46" y="32" width="8" height="38" rx="2" fill="#ff6b35" opacity="0.5"/>
+            <!-- Top arc -->
+            <path d="M22 40 Q50 18 78 40" fill="none" stroke="#ff6b35" stroke-width="3"/>
+            <!-- Ground line -->
+            <rect x="18" y="70" width="64" height="5" rx="2" fill="#ff6b35"/>
+            <!-- Star -->
+            <polygon points="50,22 52,28 58,28 53,32 55,38 50,34 45,38 47,32 42,28 48,28" fill="#ffd700"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Arena of Valor</div>
+        <div class="game-sub">Vouchers – كوبونات</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Arena of Valor','100 Vouchers','220 دج')"><div class="gpkg-amount">100 <span class="gpkg-currency">🎫</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Arena of Valor','300 Vouchers','550 دج')"><div class="gpkg-amount">300 <span class="gpkg-currency">🎫</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Arena of Valor','600 Vouchers','1,100 دج')"><div class="gpkg-amount">600 <span class="gpkg-currency">🎫</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Arena of Valor','1300 Vouchers','2,200 دج')"><div class="gpkg-amount">1300 <span class="gpkg-currency">🎫</span></div><div class="gpkg-price"><div class="gpkg-dz">2,200 دج</div><div class="gpkg-usd">~10$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Arena of Valor','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Hearthstone -->
+    <div class="game-card" data-gcat="cards">
+      <div class="game-banner" style="background:linear-gradient(135deg,#2d1b00,#c0781c,#8b4513)">
+        <div class="game-logo-svg-wrap">
+          <!-- Hearthstone Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#2d1b00" stroke="#c0781c" stroke-width="2"/>
+            <!-- Hearthstone gem shape -->
+            <path d="M50 14 L76 30 L76 70 L50 86 L24 70 L24 30 Z" fill="#c0781c"/>
+            <path d="M50 20 L72 34 L72 66 L50 80 L28 66 L28 34 Z" fill="#8b4513"/>
+            <!-- Heart -->
+            <path d="M50 62 C50 62 30 50 30 38 C30 32 35 26 42 28 C46 29 50 34 50 34 C50 34 54 29 58 28 C65 26 70 32 70 38 C70 50 50 62 50 62Z" fill="#e74c3c"/>
+            <!-- Flame on top -->
+            <path d="M50 26 C50 26 44 32 44 38 C44 42 47 44 50 42 C53 44 56 42 56 38 C56 32 50 26 50 26Z" fill="#ffd700"/>
+            <path d="M50 30 C50 30 46 34 46 38 C46 40 48 41 50 40 C52 41 54 40 54 38 C54 34 50 30 50 30Z" fill="#ff6b00"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Hearthstone</div>
+        <div class="game-sub">Gold & Packs</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Hearthstone','2 Packs','220 دج')"><div class="gpkg-amount">2 <span class="gpkg-currency">Packs</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Hearthstone','7 Packs','660 دج')"><div class="gpkg-amount">7 <span class="gpkg-currency">Packs</span></div><div class="gpkg-price"><div class="gpkg-dz">660 دج</div><div class="gpkg-usd">~3$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Hearthstone','15 Packs','1,320 دج')"><div class="gpkg-amount">15 <span class="gpkg-currency">Packs</span></div><div class="gpkg-price"><div class="gpkg-dz">1,320 دج</div><div class="gpkg-usd">~6$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Hearthstone','40 Packs','3,300 دج')"><div class="gpkg-amount">40 <span class="gpkg-currency">Packs</span></div><div class="gpkg-price"><div class="gpkg-dz">3,300 دج</div><div class="gpkg-usd">~15$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Hearthstone','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
+
+    <!-- Steam Wallet -->
+    <div class="game-card" data-gcat="cards">
+      <div class="game-banner" style="background:linear-gradient(135deg,#1b2838,#2a475e,#66c0f4)">
+        <span class="pop-badge">🌟 شامل</span>
+        <div class="game-logo-svg-wrap">
+          <!-- Steam Logo SVG -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#1b2838" stroke="#66c0f4" stroke-width="2"/>
+            <!-- Steam logo symbol -->
+            <path d="M50 14 C30 14 14 30 14 50 C14 68.5 27.5 84 45.5 87 L32 67 C30 65 29 62 29 59 C29 50 36.5 42.5 45.5 42.5 C46.5 42.5 47.5 42.5 48.5 42.7 L61 27 C57.7 14.5 50 14 50 14Z" fill="#66c0f4"/>
+            <circle cx="45.5" cy="59" r="10" fill="#66c0f4" opacity="0.5"/>
+            <circle cx="45.5" cy="59" r="6" fill="#fff"/>
+            <!-- Gear teeth on right side -->
+            <path d="M64 26 C76 32 84 43 86 56 L76 57 C74 48 68 41 60 37 Z" fill="#66c0f4"/>
+            <path d="M86 58 C86 72 78 83 66 88 L58 76 C66 72 72 65 74 57 Z" fill="#66c0f4"/>
+            <!-- Gear circle -->
+            <circle cx="70" cy="58" r="14" fill="none" stroke="#66c0f4" stroke-width="4"/>
+            <circle cx="70" cy="58" r="6" fill="#66c0f4"/>
+          </svg>
+        </div>
+        <div class="game-overlay"></div>
+      </div>
+      <div class="game-body">
+        <div class="game-name">Steam Wallet</div>
+        <div class="game-sub">رصيد بطاقة Steam</div>
+        <div class="game-packages">
+          <div class="gpkg" onclick="openGameOrder('Steam Wallet','5$ بطاقة','110 دج')"><div class="gpkg-amount">5 <span class="gpkg-currency">$</span></div><div class="gpkg-price"><div class="gpkg-dz">110 دج</div><div class="gpkg-usd">~0.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Steam Wallet','10$ بطاقة','220 دج')"><div class="gpkg-amount">10 <span class="gpkg-currency">$</span></div><div class="gpkg-price"><div class="gpkg-dz">220 دج</div><div class="gpkg-usd">~1$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Steam Wallet','25$ بطاقة','550 دج')"><div class="gpkg-amount">25 <span class="gpkg-currency">$</span></div><div class="gpkg-price"><div class="gpkg-dz">550 دج</div><div class="gpkg-usd">~2.5$</div></div></div>
+          <div class="gpkg" onclick="openGameOrder('Steam Wallet','50$ بطاقة','1,100 دج')"><div class="gpkg-amount">50 <span class="gpkg-currency">$</span></div><div class="gpkg-price"><div class="gpkg-dz">1,100 دج</div><div class="gpkg-usd">~5$</div></div></div>
+        </div>
+        <button class="game-btn" onclick="openGameOrder('Steam Wallet','','')">🛒 اشحن الآن</button>
+      </div>
+    </div>
 
   </div>
+</div>
 </div>
 </section>
 
@@ -855,7 +1124,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
       <div>
         <span class="sec-lbl">العملات الرقمية</span>
         <h2 class="sec-h" style="font-size:clamp(1.5rem,4vw,2.2rem)">تداول العملات<br><span style="color:var(--gd)">الرقمية</span></h2>
-        <p style="color:var(--mt);font-size:clamp(.88rem,1.5vw,.95rem);line-height:1.88;margin-bottom:24px">نوفر خدمة شراء وبيع أبرز العملات الرقمية بطرق دفع جزائرية آمنة. أسعار تنافسية وتسليم فوري.</p>
+        <p style="color:var(--mt);font-size:clamp(.88rem,1.5vw,.95rem);line-height:1.88;margin-bottom:24px">نوفر خدمة شراء وبيع أبرز العملات الرقمية بطرق دفع جزائرية وعربية ودولية آمنة. أسعار تنافسية وتسليم فوري.</p>
         <button class="btn-glow" onclick="openOrder('عملات رقمية')">اشتري / بيع الآن</button>
       </div>
       <div class="coin-grid">
@@ -877,18 +1146,54 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   <div class="pay-inner">
     <div class="pay-head reveal">
       <span class="sec-lbl">طرق الدفع</span>
-      <h2 class="sec-h">ادفع بالطريقة<br><span style="color:var(--cy)">التي تناسبك</span></h2>
-      <p class="sec-p">جميع طرق الدفع المتاحة في الجزائر لراحتك التامة.</p>
+      <h2 class="sec-h">ادفع بأي عملة<br><span style="color:var(--cy)">من أي مكان</span></h2>
+      <p class="sec-p">جميع طرق الدفع العربية والدولية متاحة. نقبل الدينار الجزائري، الريال السعودي، الدرهم الإماراتي، الجنيه المصري وأكثر!</p>
     </div>
-    <div class="pay-grid reveal">
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.15)"/><text x="8" y="38" font-size="28" fill="#fff">📮</text></svg></div><span class="pay-nm">Baridimob</span><span class="pay-sub">CCP بريدي موب</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#2563eb,#1d4ed8)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="8" y="16" width="36" height="22" rx="4" stroke="#fff" stroke-width="2.5" fill="none"/><rect x="8" y="23" width="36" height="5" fill="#fff"/><rect x="14" y="30" width="10" height="3" rx="1.5" fill="rgba(255,255,255,.6)"/></svg></div><span class="pay-nm">CIB / Satim</span><span class="pay-sub">بطاقة بنكية</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#059669,#10b981)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="14" y="8" width="24" height="36" rx="5" stroke="#fff" stroke-width="2.2" fill="none"/><circle cx="26" cy="38" r="2" fill="#fff"/><rect x="20" y="14" width="12" height="2.5" rx="1.2" fill="#fff" opacity=".6"/></svg></div><span class="pay-nm">Flexy / Mobilis</span><span class="pay-sub">رصيد الهاتف</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#7c3aed,#a855f7)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 12a14 14 0 100 28 14 14 0 000-28zm0 5l4 8h-8l4-8zm-6 12l3-3h6l3 3-6 5-6-5z" stroke="#fff" stroke-width="1.8" fill="none"/></svg></div><span class="pay-nm">Wafacash</span><span class="pay-sub">تحويل نقدي</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#26A17B,#1a7a5c)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 10a16 16 0 100 32 16 16 0 000-32zm0 28a12 12 0 110-24 12 12 0 010 24zm1.4-18.7c2.1.3 3.5 1.5 3.8 3.3h-2c-.2-1-1-1.6-1.8-1.8v-1.5zm-2.8 0v1.5c-.9.2-1.6.8-1.8 1.8h-2c.3-1.8 1.7-3 3.8-3.3zm-3.8 5.7h2c.2 1 1 1.6 1.8 1.8v1.5c-2.1-.3-3.5-1.5-3.8-3.3zm6.6 3.3v-1.5c.9-.2 1.6-.8 1.8-1.8h2c-.3 1.8-1.7 3-3.8 3.3z" fill="#fff"/></svg></div><span class="pay-nm">USDT / Crypto</span><span class="pay-sub">عملات رقمية</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#d97706,#f59e0b)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><rect x="7" y="16" width="38" height="22" rx="5" stroke="#fff" stroke-width="2" fill="none"/><circle cx="26" cy="27" r="6" stroke="#fff" stroke-width="2" fill="none"/><circle cx="26" cy="27" r="2.5" fill="#fff" opacity=".6"/></svg></div><span class="pay-nm">يداً بيد</span><span class="pay-sub">الجزائر العاصمة</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#6d28d9,#7c3aed)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M26 12l12 7v14l-12 7-12-7V19l12-7z" stroke="#fff" stroke-width="2" fill="none"/><path d="M26 20v12m-6-8l6 4 6-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div><span class="pay-nm">BaridiPay</span><span class="pay-sub">دفع إلكتروني</span></div>
-      <div class="pay-card"><div class="pay-ico" style="background:linear-gradient(135deg,#0891b2,#06b6d4)"><svg viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="14" fill="rgba(255,255,255,.1)"/><path d="M14 26h24m-8-8l8 8-8 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="pay-nm">تحويل CCP</span><span class="pay-sub">تحويل بريدي مباشر</span></div>
+    <div class="pay-tabs">
+      <button class="ptab on" onclick="showPayRegion('dz',this)">🇩🇿 الجزائر</button>
+      <button class="ptab" onclick="showPayRegion('gulf',this)">🏳️ الخليج</button>
+      <button class="ptab" onclick="showPayRegion('arab',this)">🌍 عربي</button>
+      <button class="ptab" onclick="showPayRegion('intl',this)">🌐 دولي</button>
+    </div>
+    <div class="pay-region active" id="pay-dz">
+      <div class="pay-card"><div class="pay-ico">📮</div><span class="pay-nm">Baridimob</span><span class="pay-sub">CCP بريدي موب</span></div>
+      <div class="pay-card"><div class="pay-ico">💳</div><span class="pay-nm">CIB / Satim</span><span class="pay-sub">بطاقة بنكية</span></div>
+      <div class="pay-card"><div class="pay-ico">📱</div><span class="pay-nm">Flexy / Mobilis</span><span class="pay-sub">رصيد الهاتف</span></div>
+      <div class="pay-card"><div class="pay-ico">💵</div><span class="pay-nm">يداً بيد</span><span class="pay-sub">الجزائر العاصمة</span></div>
+      <div class="pay-card"><div class="pay-ico">🏦</div><span class="pay-nm">BaridiPay</span><span class="pay-sub">دفع إلكتروني</span></div>
+      <div class="pay-card"><div class="pay-ico">📬</div><span class="pay-nm">تحويل CCP</span><span class="pay-sub">تحويل بريدي</span></div>
+      <div class="pay-card"><div class="pay-ico">📡</div><span class="pay-nm">Djezzy / Ooredoo</span><span class="pay-sub">رصيد الهاتف</span></div>
+      <div class="pay-card"><div class="pay-ico">💰</div><span class="pay-nm">Wafacash</span><span class="pay-sub">تحويل نقدي</span></div>
+    </div>
+    <div class="pay-region" id="pay-gulf">
+      <div class="pay-card"><div class="pay-ico">🇸🇦</div><span class="pay-nm">STC Pay</span><span class="pay-sub">ريال سعودي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇸🇦</div><span class="pay-nm">مدى</span><span class="pay-sub">Mada Card</span></div>
+      <div class="pay-card"><div class="pay-ico">🇦🇪</div><span class="pay-nm">UAE Wallet</span><span class="pay-sub">درهم إماراتي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇦🇪</div><span class="pay-nm">Emirates NBD</span><span class="pay-sub">تحويل بنكي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇰🇼</div><span class="pay-nm">KNET</span><span class="pay-sub">دينار كويتي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇶🇦</div><span class="pay-nm">QNB</span><span class="pay-sub">ريال قطري</span></div>
+      <div class="pay-card"><div class="pay-ico">🇧🇭</div><span class="pay-nm">BenefitPay</span><span class="pay-sub">دينار بحريني</span></div>
+      <div class="pay-card"><div class="pay-ico">🇴🇲</div><span class="pay-nm">Oman Net</span><span class="pay-sub">ريال عماني</span></div>
+    </div>
+    <div class="pay-region" id="pay-arab">
+      <div class="pay-card"><div class="pay-ico">🇪🇬</div><span class="pay-nm">Fawry</span><span class="pay-sub">جنيه مصري</span></div>
+      <div class="pay-card"><div class="pay-ico">🇪🇬</div><span class="pay-nm">Vodafone Cash</span><span class="pay-sub">مصر</span></div>
+      <div class="pay-card"><div class="pay-ico">🇲🇦</div><span class="pay-nm">CIH Bank</span><span class="pay-sub">درهم مغربي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇲🇦</div><span class="pay-nm">Inwi Money</span><span class="pay-sub">المغرب</span></div>
+      <div class="pay-card"><div class="pay-ico">🇹🇳</div><span class="pay-nm">D17</span><span class="pay-sub">دينار تونسي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇯🇴</div><span class="pay-nm">eFawateercom</span><span class="pay-sub">الأردن</span></div>
+      <div class="pay-card"><div class="pay-ico">🇮🇶</div><span class="pay-nm">ZainCash</span><span class="pay-sub">دينار عراقي</span></div>
+      <div class="pay-card"><div class="pay-ico">🇾🇪</div><span class="pay-nm">كاش وان</span><span class="pay-sub">اليمن</span></div>
+    </div>
+    <div class="pay-region" id="pay-intl">
+      <div class="pay-card"><div class="pay-ico">💳</div><span class="pay-nm">Visa / MC</span><span class="pay-sub">بطاقة دولية</span></div>
+      <div class="pay-card"><div class="pay-ico">🅿️</div><span class="pay-nm">PayPal</span><span class="pay-sub">دولار / يورو</span></div>
+      <div class="pay-card"><div class="pay-ico">💚</div><span class="pay-nm">USDT / Crypto</span><span class="pay-sub">عملات رقمية</span></div>
+      <div class="pay-card"><div class="pay-ico">🌐</div><span class="pay-nm">Binance Pay</span><span class="pay-sub">كريبتو</span></div>
+      <div class="pay-card"><div class="pay-ico">💵</div><span class="pay-nm">USD دولار</span><span class="pay-sub">1$ = 220 دج</span></div>
+      <div class="pay-card"><div class="pay-ico">💶</div><span class="pay-nm">EUR يورو</span><span class="pay-sub">1€ = 240 دج</span></div>
+      <div class="pay-card"><div class="pay-ico">🏦</div><span class="pay-nm">Western Union</span><span class="pay-sub">تحويل دولي</span></div>
+      <div class="pay-card"><div class="pay-ico">🔵</div><span class="pay-nm">Skrill</span><span class="pay-sub">دفع إلكتروني</span></div>
     </div>
   </div>
 </div>
@@ -903,10 +1208,10 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
       <h2 class="sec-h">4 خطوات فقط<br><span class="grad-text">وتفاعلك في السماء</span></h2>
     </div>
     <div class="steps-row reveal">
-      <div class="step"><div class="step-n">01</div><div class="step-t">اختر خدمتك</div><p class="step-d">تصفح خدماتنا واختر المنصة والكمية التي تناسب هدفك.</p></div>
-      <div class="step"><div class="step-n">02</div><div class="step-t">أرسل الطلب</div><p class="step-d">أرسل رابط حسابك أو منشورك وأخبرنا بالكمية المطلوبة.</p></div>
-      <div class="step"><div class="step-n">03</div><div class="step-t">اختر طريقة الدفع</div><p class="step-d">ادفع بالطريقة المناسبة من خيارات الدفع الجزائرية.</p></div>
-      <div class="step"><div class="step-n">04</div><div class="step-t">استقبل التفاعل</div><p class="step-d">يبدأ التسليم فوراً خلال دقائق. نتائج فورية وحقيقية.</p></div>
+      <div class="step"><div class="step-n">01</div><div class="step-t">اختر خدمتك</div><p class="step-d">تصفح خدماتنا واختر المنصة أو اللعبة والكمية التي تناسب هدفك.</p></div>
+      <div class="step"><div class="step-n">02</div><div class="step-t">أرسل الطلب</div><p class="step-d">أرسل رابط حسابك أو ID اللعبة وأخبرنا بالكمية المطلوبة.</p></div>
+      <div class="step"><div class="step-n">03</div><div class="step-t">اختر طريقة الدفع</div><p class="step-d">ادفع بالطريقة المناسبة من خيارات الدفع الجزائرية أو العربية أو الدولية.</p></div>
+      <div class="step"><div class="step-n">04</div><div class="step-t">استقبل فوراً</div><p class="step-d">يبدأ التسليم فوراً خلال دقائق. نتائج فورية وحقيقية مضمونة.</p></div>
     </div>
   </div>
 </div>
@@ -914,14 +1219,11 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
 
 <!-- TESTIMONIALS -->
 <div class="testi-wrap">
-  <div class="testi-head reveal">
-    <span class="sec-lbl">آراء العملاء</span>
-    <h2 class="sec-h">ماذا قالوا عنّا</h2>
-  </div>
+  <div class="testi-head reveal"><span class="sec-lbl">آراء العملاء</span><h2 class="sec-h">ماذا قالوا عنّا</h2></div>
   <div class="testi-grid reveal">
-    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">خدمة ممتازة وسريعة! طلبت لايكات إنستغرام ووصلت خلال 10 دقائق. سأعود بالتأكيد.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">ي</div><div><span class="av-nm">يزيد البومدين</span><span class="av-h">@yazid.bm • الجزائر</span></div></div></div>
-    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">اشتريت مشاهدات تيك توك وطار الفيديو في الترند! الخدمة رائعة والأسعار معقولة.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#ec4899,#f97316)">س</div><div><span class="av-nm">سارة خليفة</span><span class="av-h">@sara.k • وهران</span></div></div></div>
-    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">أفضل متجر في الجزائر للتفاعل. الدعم سريع الرد والدفع ببريدي موب سهل جداً.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#06b6d4,#10b981)">م</div><div><span class="av-nm">محمد لعريبي</span><span class="av-h">@med.laaribi • قسنطينة</span></div></div></div>
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">شحنت PUBG بـ Baridimob ووصل الـ UC خلال 5 دقائق! خدمة ممتازة وسريعة.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#ff6b2b,#ff9500)">ي</div><div><span class="av-nm">يزيد البومدين</span><span class="av-h">@yazid.bm • وهران 🎮</span></div></div></div>
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">اشتريت ماسات Free Fire وطار الفيديو في الترند! الخدمة رائعة والأسعار معقولة جداً.</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#ec4899,#f97316)">س</div><div><span class="av-nm">سارة خليفة</span><span class="av-h">@sara.k • قسنطينة 🔥</span></div></div></div>
+    <div class="tc"><div class="stars">★★★★★</div><p class="tc-txt">أفضل متجر في الجزائر. دفعت بالريال السعودي وتم الشحن فوراً. شكراً Growza!</p><div class="tc-auth"><div class="av" style="background:linear-gradient(135deg,#06b6d4,#10b981)">م</div><div><span class="av-nm">محمد العمري</span><span class="av-h">@med.omari • السعودية 🇸🇦</span></div></div></div>
   </div>
 </div>
 
@@ -929,7 +1231,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
 <div class="cta-wrap">
   <div class="cta-box reveal">
     <h2 class="cta-h">لا تنتظر أكثر<br><span class="grad-text">ابدأ اليوم معنا</span></h2>
-    <p class="cta-p">انضم لأكثر من 15,000 عميل راضٍ في الجزائر. الطلب يستغرق دقيقة واحدة فقط.</p>
+    <p class="cta-p">انضم لأكثر من 15,000 عميل راضٍ في الجزائر والوطن العربي. الطلب يستغرق دقيقة واحدة فقط.</p>
     <div class="cta-btns">
       <button class="btn-glow" onclick="openOrder()">🚀 ابدأ الآن</button>
       <a href="https://wa.me/213000000000" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none" class="btn-border">💬 تواصل معنا</a>
@@ -943,7 +1245,7 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
   <div class="ft-top">
     <div>
       <span class="ft-logo">GROWZA</span>
-      <p class="ft-desc">متجرك الأول في الجزائر لشراء التفاعل الرقمي والعملات الرقمية. خدمة سريعة آمنة.</p>
+      <p class="ft-desc">متجرك الأول في الجزائر لشراء التفاعل الرقمي، شحن الألعاب والعملات الرقمية. خدمة سريعة آمنة.</p>
       <div class="ft-soc">
         <a href="#"><svg viewBox="0 0 24 24" fill="none"><defs><radialGradient id="igs" cx="30%" cy="107%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#igs)"/><path d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" fill="#fff"/><circle cx="16.2" cy="7.8" r="1" fill="#fff"/><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.5" fill="none"/></svg></a>
         <a href="#"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6" fill="#000"/><path d="M19 8.2a5.2 5.2 0 01-3.1-1V15a4.4 4.4 0 11-3.8-4.35v2.45a2 2 0 101.8 1.98V4h2.05a5.22 5.22 0 003.05 4.2z" fill="white"/></svg></a>
@@ -956,19 +1258,19 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
       <ul class="ft-ul">
         <li><a href="#">لايكات Instagram</a></li>
         <li><a href="#">متابعين TikTok</a></li>
-        <li><a href="#">مشاهدات YouTube</a></li>
-        <li><a href="#">Facebook & Telegram</a></li>
+        <li><a href="#">شحن PUBG Mobile</a></li>
+        <li><a href="#">شحن Free Fire</a></li>
         <li><a href="#">تطوير المواقع</a></li>
       </ul>
     </div>
     <div>
-      <div class="ft-col-t">العملات</div>
+      <div class="ft-col-t">الألعاب</div>
       <ul class="ft-ul">
-        <li><a href="#">Bitcoin BTC</a></li>
-        <li><a href="#">Ethereum ETH</a></li>
-        <li><a href="#">Tether USDT</a></li>
-        <li><a href="#">Solana SOL</a></li>
-        <li><a href="#">Dogecoin DOGE</a></li>
+        <li><a href="#">PUBG Mobile</a></li>
+        <li><a href="#">Free Fire</a></li>
+        <li><a href="#">Mobile Legends</a></li>
+        <li><a href="#">Genshin Impact</a></li>
+        <li><a href="#">Steam Wallet</a></li>
       </ul>
     </div>
     <div>
@@ -978,21 +1280,22 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
         <li><a href="#">الأسئلة الشائعة</a></li>
         <li><a href="#">سياسة الاسترجاع</a></li>
         <li><a href="#">طرق الدفع</a></li>
-        <li><a href="#">Instagram المتجر</a></li>
+        <li><a href="#">أسعار الصرف</a></li>
       </ul>
     </div>
   </div>
   <div class="ft-bot">
-    <span class="ft-copy">© 2026 Growza • جميع الحقوق محفوظة • الجزائر 🇩🇿</span>
+    <span class="ft-copy">© 2026 Growza • جميع الحقوق محفوظة • الجزائر 🇩🇿 | 1$ = 220 دج</span>
     <div class="ft-badges">
       <span class="fb">✅ آمن 100%</span>
       <span class="fb">⚡ تسليم فوري</span>
+      <span class="fb">🎮 شحن ألعاب</span>
     </div>
   </div>
 </div>
 </footer>
 
-<!-- MODAL -->
+<!-- MAIN MODAL -->
 <div class="ovl" id="ovl" onclick="closeOvl(event)">
   <div class="modal">
     <button class="m-close" onclick="closeOrder()">✕</button>
@@ -1035,6 +1338,12 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
           <option>يداً بيد</option>
           <option>Wafacash</option>
           <option>BaridiPay</option>
+          <option>STC Pay</option>
+          <option>مدى</option>
+          <option>Visa / Mastercard</option>
+          <option>PayPal</option>
+          <option>Fawry</option>
+          <option>ZainCash</option>
         </select>
       </div>
     </div>
@@ -1043,6 +1352,63 @@ footer{position:relative;z-index:1;border-top:1px solid rgba(120,50,240,.15);pad
       <input class="fi" type="tel" placeholder="+213 XX XX XX XX" dir="ltr" inputmode="tel"/>
     </div>
     <button class="sub-btn" onclick="submitOrd()">🚀 أرسل الطلب عبر واتساب</button>
+  </div>
+</div>
+
+<!-- GAME MODAL -->
+<div class="ovl" id="gameOvl" onclick="closeGameOvl(event)">
+  <div class="modal">
+    <button class="m-close" onclick="closeGameOrder()">✕</button>
+    <div id="gameBanner" class="game-modal-banner" style="background:linear-gradient(135deg,#ff6b2b,#ff9500)">🎮</div>
+    <div class="m-title" id="gameTitle">شحن اللعبة</div>
+    <div class="m-sub" id="gameSub">اختر الباقة وأكمل الطلب</div>
+    <div class="fg">
+      <label class="fl">الباقة المختارة</label>
+      <input class="fi" id="gamePkg" type="text" placeholder="الباقة" readonly/>
+    </div>
+    <div class="fg">
+      <label class="fl">ID اللاعب / معرف الحساب</label>
+      <input class="fi" id="gameId" type="text" placeholder="أدخل ID حسابك في اللعبة" dir="ltr"/>
+    </div>
+    <div class="f2">
+      <div class="fg">
+        <label class="fl">طريقة الدفع</label>
+        <select class="fsel" id="gamePayMethod">
+          <option>Baridimob / CCP</option>
+          <option>CIB بطاقة بنكية</option>
+          <option>Flexy / رصيد</option>
+          <option>USDT Crypto</option>
+          <option>STC Pay</option>
+          <option>مدى</option>
+          <option>Visa / Mastercard</option>
+          <option>PayPal</option>
+          <option>Fawry (مصر)</option>
+          <option>ZainCash (العراق)</option>
+          <option>يداً بيد</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="fl">عملة الدفع</label>
+        <select class="fsel" id="gameCurrency">
+          <option>دينار جزائري (DZD)</option>
+          <option>دولار أمريكي (USD)</option>
+          <option>يورو (EUR)</option>
+          <option>ريال سعودي (SAR)</option>
+          <option>درهم إماراتي (AED)</option>
+          <option>جنيه مصري (EGP)</option>
+          <option>دينار كويتي (KWD)</option>
+          <option>ريال قطري (QAR)</option>
+          <option>درهم مغربي (MAD)</option>
+          <option>دينار تونسي (TND)</option>
+          <option>دينار عراقي (IQD)</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="fl">رقم الهاتف (واتساب)</label>
+      <input class="fi" id="gamePhone" type="tel" placeholder="+213 XX XX XX XX" dir="ltr" inputmode="tel"/>
+    </div>
+    <button class="sub-btn" onclick="submitGameOrd()" style="background:linear-gradient(135deg,#ff6b2b,#ff9500);box-shadow:0 6px 25px rgba(255,107,43,.4)">🎮 اشحن الآن عبر واتساب</button>
   </div>
 </div>
 
@@ -1096,25 +1462,10 @@ animate();
 
 /* ===== NAV ===== */
 let navOpen=false;
-function toggleNav(){
-  navOpen=!navOpen;
-  document.getElementById('ham').classList.toggle('open',navOpen);
-  document.getElementById('mobNav').classList.toggle('open',navOpen);
-  document.body.style.overflow=navOpen?'hidden':'';
-}
-function closeNav(){
-  navOpen=false;
-  document.getElementById('ham').classList.remove('open');
-  document.getElementById('mobNav').classList.remove('open');
-  document.body.style.overflow='';
-}
-// Close nav on outside click
-document.addEventListener('click',e=>{
-  if(navOpen&&!e.target.closest('nav')&&!e.target.closest('.mob-nav'))closeNav();
-});
-window.addEventListener('scroll',()=>{
-  document.getElementById('nav').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,.7)':'none';
-},{ passive:true });
+function toggleNav(){navOpen=!navOpen;document.getElementById('ham').classList.toggle('open',navOpen);document.getElementById('mobNav').classList.toggle('open',navOpen);document.body.style.overflow=navOpen?'hidden':'';}
+function closeNav(){navOpen=false;document.getElementById('ham').classList.remove('open');document.getElementById('mobNav').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('click',e=>{if(navOpen&&!e.target.closest('nav')&&!e.target.closest('.mob-nav'))closeNav();});
+window.addEventListener('scroll',()=>{document.getElementById('nav').style.boxShadow=window.scrollY>50?'0 4px 30px rgba(0,0,0,.7)':'none';},{passive:true});
 
 /* ===== SCROLL REVEAL ===== */
 const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.08});
@@ -1123,50 +1474,91 @@ document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
 /* ===== COUNTERS ===== */
 function animN(el,t){
   let n=0,step=t/55;
-  const tm=setInterval(()=>{
-    n+=step;
-    if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(tm);}
-    else el.textContent=Math.floor(n).toLocaleString()+'+';
-  },18);
+  const tm=setInterval(()=>{n+=step;if(n>=t){el.textContent=t.toLocaleString()+'+';clearInterval(tm);}else el.textContent=Math.floor(n).toLocaleString()+'+';},18);
 }
-const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
-  document.querySelectorAll('[data-t]').forEach(el=>animN(el,+el.dataset.t));
-  co.disconnect();
-}});},{threshold:.3});
-const sb=document.querySelector('.stats');
-if(sb)co.observe(sb);
+const co=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('[data-t]').forEach(el=>animN(el,+el.dataset.t));co.disconnect();}});},{threshold:.3});
+const sb=document.querySelector('.stats');if(sb)co.observe(sb);
 
-/* ===== FILTER ===== */
+/* ===== FILTER SERVICES ===== */
 function filt(cat,btn){
   document.querySelectorAll('.cat').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  document.querySelectorAll('.sc').forEach(c=>{
-    const show=cat==='all'||c.dataset.cat===cat;
-    c.style.display=show?'':'none';
-  });
+  document.querySelectorAll('.sc').forEach(c=>{const show=cat==='all'||c.dataset.cat===cat;c.style.display=show?'':'none';});
 }
 
-/* ===== MODAL ===== */
+/* ===== FILTER GAMES ===== */
+function gfilt(cat,btn){
+  document.querySelectorAll('.gcat').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.game-card').forEach(c=>{const show=cat==='all'||c.dataset.gcat===cat;c.style.display=show?'':'none';});
+}
+
+/* ===== PAYMENT TABS ===== */
+function showPayRegion(region,btn){
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.pay-region').forEach(r=>r.classList.remove('active'));
+  document.getElementById('pay-'+region).classList.add('active');
+}
+
+/* ===== MAIN MODAL ===== */
 function openOrder(srv){
   document.getElementById('ovl').classList.add('show');
   document.body.style.overflow='hidden';
-  if(srv){
-    document.getElementById('msub').textContent='الخدمة: '+srv;
-    const sel=document.getElementById('srvSel');
-    for(let o of sel.options)if(o.text.includes(srv)){sel.value=o.value;break;}
-  } else {
-    document.getElementById('msub').textContent='اختر الخدمة وأرسل طلبك عبر واتساب';
-  }
+  if(srv){document.getElementById('msub').textContent='الخدمة: '+srv;const sel=document.getElementById('srvSel');for(let o of sel.options)if(o.text.includes(srv)){sel.value=o.value;break;}}
+  else{document.getElementById('msub').textContent='اختر الخدمة وأرسل طلبك عبر واتساب';}
 }
 function closeOrder(){document.getElementById('ovl').classList.remove('show');document.body.style.overflow='';}
 function closeOvl(e){if(e.target===document.getElementById('ovl'))closeOrder();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOrder();});
 function submitOrd(){
   const s=document.getElementById('srvSel').value;
   const msg=encodeURIComponent(`مرحبا Growza 👋\nأريد طلب: ${s}\nالرجاء التواصل معي للتفاصيل والسعر`);
-  window.open(`https://wa.me/213000000000?text=${msg}`,'_blank');
-  closeOrder();
+  window.open(`https://wa.me/213000000000?text=${msg}`,'_blank');closeOrder();
 }
+
+/* ===== GAME MODAL ===== */
+const gameBanners={
+  'PUBG Mobile':'linear-gradient(135deg,#1a1a2e,#f7b733,#fc4a1a)',
+  'Free Fire':'linear-gradient(135deg,#0f0c29,#ff4e50,#f9d423)',
+  'Mobile Legends':'linear-gradient(135deg,#0d0d0d,#c0392b,#e74c3c)',
+  'Genshin Impact':'linear-gradient(135deg,#0f3460,#533483,#e94560)',
+  'Call of Duty Mobile':'linear-gradient(135deg,#1a1a1a,#c0392b,#2c3e50)',
+  'Clash of Clans':'linear-gradient(135deg,#1a472a,#27ae60,#f39c12)',
+  'Valorant':'linear-gradient(135deg,#0a0a0a,#ff4655,#bd3944)',
+  'Honor of Kings':'linear-gradient(135deg,#0a0a2e,#c0a020,#8b0000)',
+  'League of Legends':'linear-gradient(135deg,#0a1628,#c89b3c,#785a28)',
+  'Fortnite':'linear-gradient(135deg,#1a0a4a,#7209b7,#f72585)',
+  'Clash Royale':'linear-gradient(135deg,#1a0533,#8e44ad,#3498db)',
+  'Brawl Stars':'linear-gradient(135deg,#0d1b2a,#e94560,#f4d03f)',
+  'Minecraft':'linear-gradient(135deg,#1a3a1a,#27ae60,#5dade2)',
+  'Arena of Valor':'linear-gradient(135deg,#0a0a1a,#ff6b35,#004e89)',
+  'Hearthstone':'linear-gradient(135deg,#2d1b00,#c0781c,#8b4513)',
+  'Steam Wallet':'linear-gradient(135deg,#1b2838,#2a475e,#66c0f4)'
+};
+const gameEmojis={'PUBG Mobile':'🎯','Free Fire':'🔥','Mobile Legends':'⚔️','Genshin Impact':'🌌','Call of Duty Mobile':'🎯','Clash of Clans':'🏆','Valorant':'🔴','Honor of Kings':'👑','League of Legends':'⚔️','Fortnite':'🌀','Clash Royale':'♟️','Brawl Stars':'⭐','Minecraft':'🧱','Arena of Valor':'🏛️','Hearthstone':'🃏','Steam Wallet':'🎮'};
+
+function openGameOrder(game,pkg,price){
+  document.getElementById('gameTitle').textContent='🎮 شحن '+game;
+  document.getElementById('gameSub').textContent=price?'الباقة: '+pkg+' – '+price:'اختر الباقة وأرسل طلبك';
+  document.getElementById('gamePkg').value=pkg&&price?pkg+' – '+price:'';
+  document.getElementById('gameBanner').style.background=gameBanners[game]||'linear-gradient(135deg,#ff6b2b,#ff9500)';
+  document.getElementById('gameBanner').textContent=gameEmojis[game]||'🎮';
+  document.getElementById('gameOvl').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+function closeGameOrder(){document.getElementById('gameOvl').classList.remove('show');document.body.style.overflow='';}
+function closeGameOvl(e){if(e.target===document.getElementById('gameOvl'))closeGameOrder();}
+function submitGameOrd(){
+  const game=document.getElementById('gameTitle').textContent.replace('🎮 شحن ','');
+  const pkg=document.getElementById('gamePkg').value;
+  const id=document.getElementById('gameId').value;
+  const pay=document.getElementById('gamePayMethod').value;
+  const curr=document.getElementById('gameCurrency').value;
+  const msg=encodeURIComponent(`مرحبا Growza 🎮\nأريد شحن: ${game}\nالباقة: ${pkg}\nID: ${id}\nطريقة الدفع: ${pay}\nالعملة: ${curr}`);
+  window.open(`https://wa.me/213000000000?text=${msg}`,'_blank');closeGameOrder();
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeOrder();closeGameOrder();}});
 </script>
 </body>
 </html>
